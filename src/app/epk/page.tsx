@@ -1,4 +1,21 @@
+'use client'
+import { useState } from 'react'
+
 export default function EPK() {
+  const [playingTrack, setPlayingTrack] = useState<number | null>(null)
+
+  const handleAudioPlay = (index: number) => {
+    setPlayingTrack(index)
+  }
+
+  const handleAudioPause = () => {
+    setPlayingTrack(null)
+  }
+
+  const handleAudioEnded = () => {
+    setPlayingTrack(null)
+  }
+
   return (
     <main className="min-h-screen bg-black text-gray-300 font-mono">
       {/* Header */}
@@ -114,7 +131,7 @@ export default function EPK() {
                     <div className="text-gray-500 text-xs">{item.duration}</div>
                   </div>
                   <div className="text-gray-600 text-xs tracking-widest">
-                    [ PLAY • 播放 ]
+                    [ {playingTrack === i ? 'STOP • 停止' : 'PLAY • 播放'} ]
                   </div>
                 </div>
                 <audio 
@@ -125,6 +142,9 @@ export default function EPK() {
                     filter: 'sepia(1) hue-rotate(320deg) saturate(0.8)',
                     background: 'transparent'
                   }}
+                  onPlay={() => handleAudioPlay(i)}
+                  onPause={handleAudioPause}
+                  onEnded={handleAudioEnded}
                 >
                   <source src={`/${item.file}`} type="audio/mpeg" />
                   Your browser does not support the audio element.
