@@ -206,21 +206,29 @@ export default function EPK() {
             PLATAFORMAS • PLATFORMS • 平台
           </div>
           <div className="space-x-3 space-y-3">
-            {["YOUTUBE MUSIC", "YOUTUBE", "APPLE MUSIC"].map((platform, i) => (
-              <a
-                key={i}
-                href="#"
-                className="inline-block px-6 py-3 text-gray-400 text-xs tracking-wider border border-gray-600 bg-gray-900/80 hover:bg-gray-800 transition-all"
-              >
-                [{platform}]
-              </a>
-            ))}
             <a
-              href="#"
-              className="inline-block px-6 py-3 text-gray-600 text-xs tracking-wider border bg-black/90"
-              style={{ borderColor: 'rgba(139, 69, 19, 0.5)' }}
+              href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 text-gray-400 text-xs tracking-wider border border-gray-600 bg-gray-900/80 hover:bg-gray-800 transition-all"
             >
-              [SPÌ·OÌ¸TÌµIÌ·FÌ´YÌ¸]
+              [YOUTUBE MUSIC]
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 text-gray-400 text-xs tracking-wider border border-gray-600 bg-gray-900/80 hover:bg-gray-800 transition-all"
+            >
+              [YOUTUBE]
+            </a>
+            <a
+              href="https://music.apple.com/us/artist/floraluz/1782261856"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-6 py-3 text-gray-400 text-xs tracking-wider border border-gray-600 bg-gray-900/80 hover:bg-gray-800 transition-all"
+            >
+              [APPLE MUSIC]
             </a>
           </div>
         </div>
