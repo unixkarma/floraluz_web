@@ -103,23 +103,32 @@ export default function EPK() {
           </div>
           <div className="max-w-2xl mx-auto space-y-4">
             {[
-              { track: "01. ERES TÚ", duration: "3:42", accent: true },
-              { track: "02. ITERACIONES", duration: "4:18", accent: false },
-              { track: "03. XTAL CLEAR", duration: "5:27", accent: true }
+              { track: "01. ERES TÚ", duration: "3:42", accent: true, file: "eres-tu.mp3" },
+              { track: "02. ITERACIONES", duration: "4:18", accent: false, file: "iteraciones.mp3" },
+              { track: "03. XTAL CLEAR", duration: "5:27", accent: true, file: "xtal-clear.mp3" }
             ].map((item, i) => (
-              <div key={i} className={`flex items-center justify-between p-4 border ${item.accent ? 'bg-red-950/10 border-red-900/20' : 'bg-white/5 border-white/10'}`}>
-                <div className="flex items-center">
-                  <button className="group mr-4 w-10 h-10 bg-red-950/30 border border-red-900/40 hover:border-red-700/60 flex items-center justify-center transition-all">
-                    <div className="w-0 h-0 border-l-[8px] border-l-red-500 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent group-hover:border-l-red-400"></div>
-                  </button>
+              <div key={i} className={`p-4 border ${item.accent ? 'bg-red-950/10 border-red-900/20' : 'bg-white/5 border-white/10'}`}>
+                <div className="flex items-center justify-between mb-2">
                   <div>
                     <div className="text-white font-bold text-sm tracking-wide">{item.track}</div>
                     <div className="text-gray-500 text-xs">{item.duration}</div>
                   </div>
+                  <div className="text-gray-600 text-xs tracking-widest">
+                    [ PLAY • 播放 ]
+                  </div>
                 </div>
-                <div className="text-gray-600 text-xs tracking-widest">
-                  [ PLAY • 播放 ]
-                </div>
+                <audio 
+                  controls 
+                  preload="none"
+                  className="w-full h-8 opacity-80 hover:opacity-100 transition-opacity"
+                  style={{
+                    filter: 'sepia(1) hue-rotate(320deg) saturate(0.8)',
+                    background: 'transparent'
+                  }}
+                >
+                  <source src={`/${item.file}`} type="audio/mpeg" />
+                  Your browser does not support the audio element.
+                </audio>
               </div>
             ))}
           </div>
