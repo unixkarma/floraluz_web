@@ -172,7 +172,7 @@ export default function EPK() {
                 Agosto 2025 • YouTube Music
               </div>
               <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
-                Electronic Dance Experimental / Future Beats Latinoamericano<br/>
+                Electronic Dance / Future Beats Latinoamericano<br/>
                 El EP &quot;Iteraciones&quot; nace de sesiones de producción mayormente digital.
               </div>
               
@@ -203,7 +203,7 @@ export default function EPK() {
                 August 2025 • YouTube Music
               </div>
               <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
-                Experimental Electronic Dance / Latin American Future Beats<br/>
+                Electronic Dance / Latin American Future Beats<br/>
                 The EP &quot;Iterations&quot; emerges from mostly digital production sessions.
               </div>
             </div>
@@ -222,7 +222,7 @@ export default function EPK() {
                 2025年8月 • YouTube Music
               </div>
               <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
-                实验电子舞曲 / 拉丁美洲未来节拍<br/>
+                电子舞曲 / 拉丁美洲未来节拍<br/>
                 EP《迭代》诞生于主要的数字制作会话。
               </div>
             </div>
