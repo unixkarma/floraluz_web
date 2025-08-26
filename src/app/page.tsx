@@ -28,14 +28,6 @@ export default function Home() {
             </div>
             
             
-            <div className="flex space-x-6 justify-center text-xs mt-8">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                MUSIC • MÚSICA • 音乐
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                CONTACT • CONTACTO • 联系
-              </a>
-            </div>
           </div>
         </div>
         
