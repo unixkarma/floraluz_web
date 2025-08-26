@@ -103,9 +103,9 @@ export default function EPK() {
           </div>
           <div className="max-w-2xl mx-auto space-y-4">
             {[
-              { track: "01. ERES TÚ", duration: "3:42", accent: true, file: "eres-tu.mp3" },
-              { track: "02. ITERACIONES", duration: "4:18", accent: false, file: "iteraciones.mp3" },
-              { track: "03. XTAL CLEAR", duration: "5:27", accent: true, file: "xtal-clear.mp3" }
+              { track: "01. ERES TÚ", duration: "3:19", accent: true, file: "eres-tu.mp3" },
+              { track: "02. ITERACIONES", duration: "3:15", accent: false, file: "iteraciones.mp3" },
+              { track: "03. XTAL CLEAR", duration: "1:17", accent: true, file: "xtal-clear.mp3" }
             ].map((item, i) => (
               <div key={i} className={`p-4 border ${item.accent ? 'bg-red-950/10 border-red-900/20' : 'bg-white/5 border-white/10'}`}>
                 <div className="flex items-center justify-between mb-2">
