@@ -187,22 +187,24 @@ export default function Home() {
         </div>
 
         {/* Bottom email with analog distortion */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 tracking-widest relative">
-          <span className="relative z-10">floraluz333@gmail.com</span>
-          <span 
-            className="absolute inset-0 text-red-900/15 transform translate-x-px"
-            style={{ animation: 'emailGlitch 5s infinite' }}
-          >
-            floraluz333@gmail.com
-          </span>
-          
-          {/* Terminal-style cursor */}
-          <span 
-            className="ml-1 text-red-800/60"
-            style={{ animation: 'blink 1s infinite' }}
-          >
-            _
-          </span>
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 tracking-widest text-center">
+          <div className="relative inline-block">
+            <span className="relative z-10">floraluz333@gmail.com</span>
+            <span 
+              className="absolute inset-0 text-red-900/15 transform translate-x-px"
+              style={{ animation: 'emailGlitch 5s infinite' }}
+            >
+              floraluz333@gmail.com
+            </span>
+            
+            {/* Terminal-style cursor */}
+            <span 
+              className="ml-1 text-red-800/60"
+              style={{ animation: 'blink 1s infinite' }}
+            >
+              _
+            </span>
+          </div>
         </div>
         
         {/* Analog artifacts scattered around */}

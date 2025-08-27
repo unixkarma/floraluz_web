@@ -17,9 +17,9 @@ export default function EPK() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-gray-300 font-mono">
+    <main className="min-h-screen bg-white text-gray-700 font-mono">
       {/* Header */}
-      <div className="text-center py-16 px-5 border-b border-gray-800 bg-black relative">
+      <div className="text-center py-16 px-5 border-b border-gray-200 bg-white relative">
         {/* Psychedelic Text Left */}
         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-900/20 text-xs tracking-widest opacity-30 rotate-90 hidden md:block">
           ◊ ∞ ◦ ∆ ◊ ∞ ◦ ∆ ◊ ∞ ◦ ∆
@@ -102,15 +102,15 @@ export default function EPK() {
         </div>
 
         {/* Project Description */}
-        <div className="bg-black border p-10 rounded mb-16" style={{ borderColor: 'rgba(220, 38, 38, 0.12)' }}>
+        <div className="bg-white border p-10 rounded mb-16" style={{ borderColor: 'rgba(220, 38, 38, 0.12)' }}>
           {/* Spanish */}
           <div className="mb-12">
             <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
               PROYECTO
               <div className="inline-block ml-3 w-1 h-1 bg-red-500 rounded-full opacity-40"></div>
             </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
+            <div className="text-sm text-gray-700 leading-relaxed max-w-4xl mx-auto text-justify">
+              <strong className="text-black">floraluz</strong> navega entre electronic dance y ambient. 
               Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
               <br/><br/>
               Grooves hipnóticos procesados digitalmente con texturas que evocan nostalgia y calidez. 
@@ -126,8 +126,8 @@ export default function EPK() {
             <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
               PROJECT
             </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
+            <div className="text-sm text-gray-700 leading-relaxed max-w-4xl mx-auto text-justify">
+              <strong className="text-black">floraluz</strong> navigates between electronic dance and ambient. 
               A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
               <br/><br/>
               Hypnotic grooves digitally processed with textures that evoke nostalgia and warmth. 
@@ -140,8 +140,8 @@ export default function EPK() {
             <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
               项目
             </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行，采用明确的低保真美学。
+            <div className="text-sm text-gray-700 leading-relaxed max-w-4xl mx-auto text-justify">
+              <strong className="text-black">floraluz</strong> 在电子舞曲和环境音乐之间航行，采用明确的低保真美学。
               这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
               <br/><br/>
               数字化处理的催眠节拍，带有唤起怀旧和温暖感的纹理。
@@ -151,7 +151,7 @@ export default function EPK() {
         </div>
 
         {/* Tracklist Player */}
-        <div className="bg-black border border-dashed p-10 rounded mb-16" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
+        <div className="bg-white border border-dashed p-10 rounded mb-16" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
           <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
             ESCUCHAR • LISTEN • 收听 EP
             <div className="text-xs text-red-900/30 mt-2 tracking-wider">
@@ -170,7 +170,7 @@ export default function EPK() {
               <div key={i} className={`p-4 border ${item.accent ? 'bg-red-950/10 border-red-900/20' : 'bg-white/5 border-white/10'}`}>
                 <div className="flex items-center justify-between mb-2">
                   <div>
-                    <div className="text-white font-bold text-sm tracking-wide">{item.track}</div>
+                    <div className="text-black font-bold text-sm tracking-wide">{item.track}</div>
                     <div className="text-gray-500 text-xs">{item.duration}</div>
                   </div>
                   <div className="text-gray-600 text-xs tracking-widest">
@@ -199,7 +199,7 @@ export default function EPK() {
 
         {/* Latest Release */}
         <div 
-          className="bg-black border p-10 rounded mb-16"
+          className="bg-white border p-10 rounded mb-16"
           style={{ borderColor: 'rgba(139, 69, 19, 0.15)' }}
         >
           {/* Spanish */}
@@ -208,19 +208,51 @@ export default function EPK() {
               ÚLTIMO LANZAMIENTO
             </div>
             <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
+              <div className="text-2xl text-black mb-3 tracking-widest">
                 EP &quot;ITERACIONES&quot;
               </div>
               <div className="text-sm text-gray-400 mb-6">
                 Agosto 2025 • YouTube Music
               </div>
-              <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+              <div className="text-sm text-gray-700 leading-relaxed max-w-2xl mx-auto mb-8">
                 Electronic Dance / Future Beats Latinoamericano<br/>
                 El EP &quot;Iteraciones&quot; nace de sesiones de producción mayormente digital.
               </div>
               
+              {/* EP Cover Image */}
+              <div className="mb-8">
+                <div className="inline-block border p-4 bg-gray-100/20 rounded relative" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
+                  <div className="relative">
+                    <img 
+                      src="/floraluz-cover.jpg" 
+                      alt="EP ITERACIONES - Cover Art" 
+                      className="w-48 h-36 object-cover border border-dashed relative z-10"
+                      style={{ 
+                        borderColor: 'rgba(220, 38, 38, 0.2)',
+                        filter: 'sepia(0.2) saturate(0.9) contrast(1.05) brightness(0.95)',
+                      }}
+                    />
+                    
+                    {/* Subtle rust overlay */}
+                    <div 
+                      className="absolute inset-0 pointer-events-none z-20 opacity-60"
+                      style={{
+                        background: `
+                          radial-gradient(circle at 15% 25%, rgba(139, 69, 19, 0.08) 0%, transparent 25%),
+                          radial-gradient(circle at 85% 75%, rgba(220, 38, 38, 0.06) 0%, transparent 20%)
+                        `,
+                        mixBlendMode: 'multiply'
+                      }}
+                    />
+                    
+                    {/* Small red indicator */}
+                    <div className="absolute top-1 right-1 w-1 h-1 bg-red-600 rounded-full opacity-70 z-30"></div>
+                  </div>
+                </div>
+              </div>
+              
               <div 
-                className="bg-black/40 p-8 mx-auto max-w-md border border-dashed"
+                className="bg-white/40 p-8 mx-auto max-w-md border border-dashed"
                 style={{ borderColor: 'rgba(139, 69, 19, 0.3)' }}
               >
                 <div className="text-sm text-gray-400 mb-4 tracking-wider">CONTENIDO</div>
@@ -239,7 +271,7 @@ export default function EPK() {
               LATEST RELEASE
             </div>
             <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
+              <div className="text-2xl text-black mb-3 tracking-widest">
                 EP &quot;ITERACIONES&quot;
               </div>
               <div className="text-sm text-gray-400 mb-6">
@@ -258,7 +290,7 @@ export default function EPK() {
               最新发布
             </div>
             <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
+              <div className="text-2xl text-black mb-3 tracking-widest">
                 EP &quot;ITERACIONES&quot;
               </div>
               <div className="text-sm text-gray-400 mb-6">
@@ -273,7 +305,7 @@ export default function EPK() {
         </div>
 
         {/* Platform Links */}
-        <div className="bg-black border border-gray-700 p-10 text-center rounded mb-16">
+        <div className="bg-white border border-gray-300 p-10 text-center rounded mb-16">
           <div className="text-lg text-gray-400 mb-8 tracking-widest font-bold">
             PLATAFORMAS • PLATFORMS • 平台
           </div>
@@ -307,7 +339,7 @@ export default function EPK() {
 
         {/* Binary Message */}
         <div 
-          className="border border-dashed bg-black/80 p-10 text-center rounded"
+          className="border border-dashed bg-white/80 p-10 text-center rounded"
           style={{ borderColor: 'rgba(139, 69, 19, 0.3)' }}
         >
           <div className="text-gray-600 text-xs leading-relaxed tracking-widest opacity-80">
