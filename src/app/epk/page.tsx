@@ -1,8 +1,67 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 export default function EPK() {
   const [playingTrack, setPlayingTrack] = useState<number | null>(null)
+  const [activeProjectSlide, setActiveProjectSlide] = useState(0)
+  const [activeReleaseSlide, setActiveReleaseSlide] = useState(0)
+  
+  const projectSliderRef = useRef<HTMLDivElement>(null)
+  const releaseSliderRef = useRef<HTMLDivElement>(null)
+
+  // Touch handling for sliders
+  const handleTouchStart = (e: React.TouchEvent, sliderType: 'project' | 'release') => {
+    const touch = e.touches[0]
+    const startX = touch.clientX
+    
+    const handleTouchMove = (e: TouchEvent) => {
+      const touch = e.touches[0]
+      const diffX = startX - touch.clientX
+      
+      if (Math.abs(diffX) > 50) {
+        if (sliderType === 'project') {
+          if (diffX > 0 && activeProjectSlide < 2) {
+            setActiveProjectSlide(activeProjectSlide + 1)
+          } else if (diffX < 0 && activeProjectSlide > 0) {
+            setActiveProjectSlide(activeProjectSlide - 1)
+          }
+        } else {
+          if (diffX > 0 && activeReleaseSlide < 2) {
+            setActiveReleaseSlide(activeReleaseSlide + 1)
+          } else if (diffX < 0 && activeReleaseSlide > 0) {
+            setActiveReleaseSlide(activeReleaseSlide - 1)
+          }
+        }
+        
+        document.removeEventListener('touchmove', handleTouchMove)
+        document.removeEventListener('touchend', handleTouchEnd)
+      }
+    }
+    
+    const handleTouchEnd = () => {
+      document.removeEventListener('touchmove', handleTouchMove)
+      document.removeEventListener('touchend', handleTouchEnd)
+    }
+    
+    document.addEventListener('touchmove', handleTouchMove, { passive: false })
+    document.addEventListener('touchend', handleTouchEnd)
+  }
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        if (activeProjectSlide > 0) setActiveProjectSlide(activeProjectSlide - 1)
+        if (activeReleaseSlide > 0) setActiveReleaseSlide(activeReleaseSlide - 1)
+      } else if (e.key === 'ArrowRight') {
+        if (activeProjectSlide < 2) setActiveProjectSlide(activeProjectSlide + 1)
+        if (activeReleaseSlide < 2) setActiveReleaseSlide(activeReleaseSlide + 1)
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+    return () => document.removeEventListener('keydown', handleKeyDown)
+  }, [activeProjectSlide, activeReleaseSlide])
 
   const handleAudioPlay = (index: number) => {
     setPlayingTrack(index)
@@ -101,58 +160,132 @@ export default function EPK() {
           </div>
         </div>
 
-        {/* Project Description */}
-        <div className="bg-black border p-10 rounded mb-16" style={{ borderColor: 'rgba(220, 38, 38, 0.12)' }}>
-          {/* Spanish */}
-          <div className="mb-12">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              PROYECTO
-              <div className="inline-block ml-3 w-1 h-1 bg-red-500 rounded-full opacity-40"></div>
-            </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
-              Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
-              <br/><br/>
-              Nuestro sonido está marcado por el frenesí del mundo moderno donde todo parece ir tan rápido, pero al mismo tiempo toma mucha inspiración de la naturaleza y la sutileza de los detalles que pasan desapercibidos para alguien que vive la mayoría del tiempo en una ciudad con una vida que va deprisa.
-              <br/><br/>
-              Grooves hipnóticos procesados digitalmente con texturas que evocan nostalgia y calidez. 
-              Future soul y electronic R&B desde una propuesta latinoamericana.
-              <div className="text-xs text-red-900/40 mt-4 opacity-60 tracking-widest">
-                [ analog_saturation.enabled ]
-              </div>
-            </div>
-          </div>
-          
-          {/* English */}
-          <div className="mb-12 border-t border-gray-800 pt-8">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              PROJECT
-            </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
-              A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
-              <br/><br/>
-              Our sound is marked by the frenzy of the modern world where everything seems to move so fast, but at the same time draws much inspiration from nature and the subtlety of details that go unnoticed by someone who spends most of their time in a city living a fast-paced life.
-              <br/><br/>
-              Hypnotic grooves digitally processed with textures that evoke nostalgia and warmth. 
-              Future soul and electronic R&B from a Latin American perspective.
+        {/* Project Description Slider */}
+        <div className="bg-black border p-10 rounded mb-16 relative overflow-hidden" style={{ borderColor: 'rgba(220, 38, 38, 0.12)' }}>
+          {/* Slider Navigation */}
+          <div className="flex justify-center mb-8">
+            <div className="flex space-x-4">
+              {[
+                { label: "PROYECTO", lang: "ES" },
+                { label: "PROJECT", lang: "EN" },
+                { label: "项目", lang: "中文" }
+              ].map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveProjectSlide(index)}
+                  className={`px-4 py-2 text-xs tracking-widest font-bold transition-all ${
+                    activeProjectSlide === index 
+                      ? 'text-white border-b border-red-500' 
+                      : 'text-gray-500 hover:text-gray-300'
+                  }`}
+                >
+                  {item.label}
+                  <span className="ml-2 text-[10px] opacity-60">{item.lang}</span>
+                  {activeProjectSlide === index && (
+                    <div className="inline-block ml-3 w-1 h-1 bg-red-500 rounded-full opacity-40"></div>
+                  )}
+                </button>
+              ))}
             </div>
           </div>
 
-          {/* Chinese */}
-          <div className="border-t border-gray-800 pt-8">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              项目
+          {/* Slider Content */}
+          <div 
+            className="relative select-none cursor-grab active:cursor-grabbing"
+            onTouchStart={(e) => handleTouchStart(e, 'project')}
+            ref={projectSliderRef}
+          >
+            <div 
+              className="flex transition-transform duration-500 ease-in-out touch-scroll scrollbar-hide sm:overflow-x-auto md:overflow-hidden"
+              style={{ transform: `translateX(-${activeProjectSlide * 100}%)` }}
+            >
+              {/* Spanish */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
+                  <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
+                  Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
+                  <br/><br/>
+                  Nuestro sonido está marcado por el frenesí del mundo moderno donde todo parece ir tan rápido, pero al mismo tiempo toma mucha inspiración de la naturaleza y la sutileza de los detalles que pasan desapercibidos para alguien que vive la mayoría del tiempo en una ciudad con una vida que va deprisa.
+                  <br/><br/>
+                  Grooves hipnóticos procesados digitalmente con texturas que evocan nostalgia y calidez. 
+                  Future soul y electronic R&B desde una propuesta latinoamericana.
+                  <div className="text-xs text-red-900/40 mt-4 opacity-60 tracking-widest">
+                    [ analog_saturation.enabled ]
+                  </div>
+                </div>
+              </div>
+              
+              {/* English */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
+                  <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
+                  A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
+                  <br/><br/>
+                  Our sound is marked by the frenzy of the modern world where everything seems to move so fast, but at the same time draws much inspiration from nature and the subtlety of details that go unnoticed by someone who spends most of their time in a city living a fast-paced life.
+                  <br/><br/>
+                  Hypnotic grooves digitally processed with textures that evoke nostalgia and warmth. 
+                  Future soul and electronic R&B from a Latin American perspective.
+                  <div className="text-xs text-red-900/40 mt-4 opacity-60 tracking-widest">
+                    [ analog_saturation.enabled ]
+                  </div>
+                </div>
+              </div>
+
+              {/* Chinese */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
+                  <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行。
+                  这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
+                  <br/><br/>
+                  我们的声音被现代世界的狂热所标记，一切似乎都在快速运转，但同时从自然中汲取大量灵感，关注那些对于大部分时间生活在城市快节奏生活中的人来说容易被忽视的细微之处。
+                  <br/><br/>
+                  数字化处理的催眠节拍，带有唤起怀旧和温暖感的纹理。
+                  来自拉丁美洲视角的未来灵魂乐和电子R&B。
+                  <div className="text-xs text-red-900/40 mt-4 opacity-60 tracking-widest">
+                    [ analog_saturation.enabled ]
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行。
-              这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
-              <br/><br/>
-              我们的声音被现代世界的狂热所标记，一切似乎都在快速运转，但同时从自然中汲取大量灵感，关注那些对于大部分时间生活在城市快节奏生活中的人来说容易被忽视的细微之处。
-              <br/><br/>
-              数字化处理的催眠节拍，带有唤起怀旧和温暖感的纹理。
-              来自拉丁美洲视角的未来灵魂乐和电子R&B。
-            </div>
+          </div>
+
+          {/* Navigation Arrows */}
+          <div className="hidden md:flex justify-between items-center absolute top-1/2 left-0 right-0 px-4 pointer-events-none">
+            <button
+              onClick={() => activeProjectSlide > 0 && setActiveProjectSlide(activeProjectSlide - 1)}
+              className={`pointer-events-auto p-2 rounded-full border transition-all ${
+                activeProjectSlide > 0
+                  ? 'border-red-500/30 text-red-400 hover:border-red-500/60 hover:bg-red-950/20'
+                  : 'border-gray-700/30 text-gray-600 cursor-not-allowed'
+              }`}
+            >
+              ←
+            </button>
+            <button
+              onClick={() => activeProjectSlide < 2 && setActiveProjectSlide(activeProjectSlide + 1)}
+              className={`pointer-events-auto p-2 rounded-full border transition-all ${
+                activeProjectSlide < 2
+                  ? 'border-red-500/30 text-red-400 hover:border-red-500/60 hover:bg-red-950/20'
+                  : 'border-gray-700/30 text-gray-600 cursor-not-allowed'
+              }`}
+            >
+              →
+            </button>
+          </div>
+
+          {/* Slide Indicators */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {[0, 1, 2].map((index) => (
+              <button
+                key={index}
+                onClick={() => setActiveProjectSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
+                  activeProjectSlide === index 
+                    ? 'bg-red-500 opacity-80' 
+                    : 'bg-gray-600 opacity-30 hover:opacity-50'
+                }`}
+              ></button>
+            ))}
           </div>
         </div>
 
@@ -203,110 +336,181 @@ export default function EPK() {
           </div>
         </div>
 
-        {/* Latest Release */}
+        {/* Latest Release Slider */}
         <div 
-          className="bg-black border p-10 rounded mb-16"
+          className="bg-black border p-10 rounded mb-16 relative overflow-hidden"
           style={{ borderColor: 'rgba(139, 69, 19, 0.15)' }}
         >
-          {/* Spanish */}
-          <div className="mb-12">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              ÚLTIMO LANZAMIENTO
+          {/* Slider Navigation */}
+          <div className="flex justify-center mb-8">
+            <div className="flex space-x-4">
+              {[
+                { label: "ÚLTIMO LANZAMIENTO", lang: "ES" },
+                { label: "LATEST RELEASE", lang: "EN" },
+                { label: "最新发布", lang: "中文" }
+              ].map((item, index) => (
+                <button
+                  key={index}
+                  onClick={() => setActiveReleaseSlide(index)}
+                  className={`px-4 py-2 text-xs tracking-widest font-bold transition-all ${
+                    activeReleaseSlide === index 
+                      ? 'text-white border-b border-orange-600' 
+                      : 'text-gray-500 hover:text-gray-300'
+                  }`}
+                >
+                  {item.label}
+                  <span className="ml-2 text-[10px] opacity-60">{item.lang}</span>
+                </button>
+              ))}
             </div>
-            <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
-                EP &quot;ITERACIONES&quot;
-              </div>
-              <div className="text-sm text-gray-400 mb-6">
-                Agosto 2025 • YouTube Music
-              </div>
-              <div className="text-sm text-gray-700 leading-relaxed max-w-2xl mx-auto mb-8">
-                Electronic Dance / Future Beats Latinoamericano<br/>
-                El EP &quot;Iteraciones&quot; nace de sesiones de producción mayormente digital.
-              </div>
-              
-              {/* EP Cover Image */}
-              <div className="mb-8">
-                <div className="inline-block border p-8 bg-gray-900/20 rounded relative" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
-                  <div className="relative">
-                    <img 
-                      src="/floraluz-ep-cover.jpg" 
-                      alt="EP ITERACIONES - Cover Art" 
-                      className="w-96 h-72 object-cover border border-dashed relative z-10"
-                      style={{ 
-                        borderColor: 'rgba(220, 38, 38, 0.2)',
-                        filter: 'sepia(0.2) saturate(0.9) contrast(1.05) brightness(0.95)',
-                      }}
-                    />
-                    
-                    {/* Subtle rust overlay */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none z-20 opacity-60"
-                      style={{
-                        background: `
-                          radial-gradient(circle at 15% 25%, rgba(139, 69, 19, 0.08) 0%, transparent 25%),
-                          radial-gradient(circle at 85% 75%, rgba(220, 38, 38, 0.06) 0%, transparent 20%)
-                        `,
-                        mixBlendMode: 'multiply'
-                      }}
-                    />
-                    
-                    {/* Small red indicator */}
-                    <div className="absolute top-1 right-1 w-1 h-1 bg-red-600 rounded-full opacity-70 z-30"></div>
+          </div>
+
+          {/* Slider Content */}
+          <div 
+            className="relative select-none cursor-grab active:cursor-grabbing"
+            onTouchStart={(e) => handleTouchStart(e, 'release')}
+            ref={releaseSliderRef}
+          >
+            <div 
+              className="flex transition-transform duration-500 ease-in-out touch-scroll scrollbar-hide sm:overflow-x-auto md:overflow-hidden"
+              style={{ transform: `translateX(-${activeReleaseSlide * 100}%)` }}
+            >
+              {/* Spanish */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-center">
+                  <div className="text-2xl text-white mb-3 tracking-widest">
+                    EP &quot;ITERACIONES&quot;
+                  </div>
+                  <div className="text-sm text-gray-400 mb-6">
+                    Agosto 2025 • YouTube Music
+                  </div>
+                  <div className="text-sm text-gray-700 leading-relaxed max-w-2xl mx-auto mb-8">
+                    Electronic Dance / Future Beats Latinoamericano<br/>
+                    El EP &quot;Iteraciones&quot; nace de sesiones de producción mayormente digital.
                   </div>
                 </div>
               </div>
               
-              <div 
-                className="bg-black/40 p-8 mx-auto max-w-md border border-dashed"
-                style={{ borderColor: 'rgba(139, 69, 19, 0.3)' }}
-              >
-                <div className="text-sm text-gray-400 mb-4 tracking-wider">CONTENIDO</div>
-                {["01. ERES TÚ", "02. ITERACIONES", "03. XTAL CLEAR"].map((track, i) => (
-                  <div key={i} className="text-sm text-gray-500 my-2">
-                    ▶ {track}
+              {/* English */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-center">
+                  <div className="text-2xl text-white mb-3 tracking-widest">
+                    EP &quot;ITERACIONES&quot;
                   </div>
-                ))}
+                  <div className="text-sm text-gray-400 mb-6">
+                    August 2025 • YouTube Music
+                  </div>
+                  <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                    Electronic Dance / Latin American Future Beats<br/>
+                    The EP &quot;Iterations&quot; emerges from mostly digital production sessions.
+                  </div>
+                </div>
+              </div>
+
+              {/* Chinese */}
+              <div className="w-full flex-shrink-0 px-4">
+                <div className="text-center">
+                  <div className="text-2xl text-white mb-3 tracking-widest">
+                    EP &quot;ITERACIONES&quot;
+                  </div>
+                  <div className="text-sm text-gray-400 mb-6">
+                    2025年8月 • YouTube Music
+                  </div>
+                  <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
+                    电子舞曲 / 拉丁美洲未来节拍<br/>
+                    EP《迭代》诞生于主要的数字制作会话。
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* English */}
-          <div className="mb-12 border-t border-gray-800 pt-8">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              LATEST RELEASE
+          {/* Shared EP Cover Image and Track List (always visible) */}
+          <div className="text-center">
+            <div className="mb-8">
+              <div className="inline-block border p-8 bg-gray-900/20 rounded relative" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
+                <div className="relative">
+                  <img 
+                    src="/floraluz-ep-cover.jpg" 
+                    alt="EP ITERACIONES - Cover Art" 
+                    className="w-96 h-72 object-cover border border-dashed relative z-10"
+                    style={{ 
+                      borderColor: 'rgba(220, 38, 38, 0.2)',
+                      filter: 'sepia(0.2) saturate(0.9) contrast(1.05) brightness(0.95)',
+                    }}
+                  />
+                  
+                  {/* Subtle rust overlay */}
+                  <div 
+                    className="absolute inset-0 pointer-events-none z-20 opacity-60"
+                    style={{
+                      background: `
+                        radial-gradient(circle at 15% 25%, rgba(139, 69, 19, 0.08) 0%, transparent 25%),
+                        radial-gradient(circle at 85% 75%, rgba(220, 38, 38, 0.06) 0%, transparent 20%)
+                      `,
+                      mixBlendMode: 'multiply'
+                    }}
+                  />
+                  
+                  {/* Small red indicator */}
+                  <div className="absolute top-1 right-1 w-1 h-1 bg-red-600 rounded-full opacity-70 z-30"></div>
+                </div>
+              </div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
-                EP &quot;ITERACIONES&quot;
+            
+            <div 
+              className="bg-black/40 p-8 mx-auto max-w-md border border-dashed"
+              style={{ borderColor: 'rgba(139, 69, 19, 0.3)' }}
+            >
+              <div className="text-sm text-gray-400 mb-4 tracking-wider">
+                {activeReleaseSlide === 0 ? "CONTENIDO" : 
+                 activeReleaseSlide === 1 ? "TRACKLIST" : "曲目单"}
               </div>
-              <div className="text-sm text-gray-400 mb-6">
-                August 2025 • YouTube Music
-              </div>
-              <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
-                Electronic Dance / Latin American Future Beats<br/>
-                The EP &quot;Iterations&quot; emerges from mostly digital production sessions.
-              </div>
+              {["01. ERES TÚ", "02. ITERACIONES", "03. XTAL CLEAR"].map((track, i) => (
+                <div key={i} className="text-sm text-gray-500 my-2">
+                  ▶ {track}
+                </div>
+              ))}
             </div>
           </div>
 
-          {/* Chinese */}
-          <div className="border-t border-gray-800 pt-8">
-            <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
-              最新发布
-            </div>
-            <div className="text-center">
-              <div className="text-2xl text-white mb-3 tracking-widest">
-                EP &quot;ITERACIONES&quot;
-              </div>
-              <div className="text-sm text-gray-400 mb-6">
-                2025年8月 • YouTube Music
-              </div>
-              <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
-                电子舞曲 / 拉丁美洲未来节拍<br/>
-                EP《迭代》诞生于主要的数字制作会话。
-              </div>
-            </div>
+          {/* Navigation Arrows */}
+          <div className="hidden md:flex justify-between items-center absolute top-1/2 left-0 right-0 px-4 pointer-events-none">
+            <button
+              onClick={() => activeReleaseSlide > 0 && setActiveReleaseSlide(activeReleaseSlide - 1)}
+              className={`pointer-events-auto p-2 rounded-full border transition-all ${
+                activeReleaseSlide > 0
+                  ? 'border-orange-600/30 text-orange-400 hover:border-orange-600/60 hover:bg-orange-950/20'
+                  : 'border-gray-700/30 text-gray-600 cursor-not-allowed'
+              }`}
+            >
+              ←
+            </button>
+            <button
+              onClick={() => activeReleaseSlide < 2 && setActiveReleaseSlide(activeReleaseSlide + 1)}
+              className={`pointer-events-auto p-2 rounded-full border transition-all ${
+                activeReleaseSlide < 2
+                  ? 'border-orange-600/30 text-orange-400 hover:border-orange-600/60 hover:bg-orange-950/20'
+                  : 'border-gray-700/30 text-gray-600 cursor-not-allowed'
+              }`}
+            >
+              →
+            </button>
+          </div>
+
+          {/* Slide Indicators */}
+          <div className="flex justify-center mt-8 space-x-2">
+            {[0, 1, 2].map((index) => (
+              <button
+                key={index}
+                onClick={() => setActiveReleaseSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all cursor-pointer ${
+                  activeReleaseSlide === index 
+                    ? 'bg-orange-600 opacity-80' 
+                    : 'bg-gray-600 opacity-30 hover:opacity-50'
+                }`}
+              ></button>
+            ))}
           </div>
         </div>
 
