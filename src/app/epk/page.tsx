@@ -384,7 +384,7 @@ export default function EPK() {
                   <div className="text-sm text-gray-400 mb-6">
                     Agosto 2025 • YouTube Music
                   </div>
-                  <div className="text-sm text-gray-700 leading-relaxed max-w-2xl mx-auto mb-8">
+                  <div className="text-sm text-gray-300 leading-relaxed max-w-2xl mx-auto mb-8">
                     Electronic Dance / Future Beats Latinoamericano<br/>
                     El EP &quot;Iteraciones&quot; nace de sesiones de producción mayormente digital.
                   </div>
