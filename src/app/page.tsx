@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black text-white relative overflow-hidden" style={{ animation: 'colorInvert 6s infinite' }}>
+    <main className="min-h-screen bg-black text-white relative overflow-hidden" style={{ animation: 'colorInvert1 7s infinite, colorInvert2 12s infinite' }}>
       {/* Analog noise background with animation */}
       <div 
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
