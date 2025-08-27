@@ -200,7 +200,7 @@ export default function EPK() {
               style={{ transform: `translateX(-${activeProjectSlide * 100}%)` }}
             >
               {/* Spanish */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
                   Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
@@ -216,7 +216,7 @@ export default function EPK() {
               </div>
               
               {/* English */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
                   A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
@@ -232,7 +232,7 @@ export default function EPK() {
               </div>
 
               {/* Chinese */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行。
                   这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
@@ -376,7 +376,7 @@ export default function EPK() {
               style={{ transform: `translateX(-${activeReleaseSlide * 100}%)` }}
             >
               {/* Spanish */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
@@ -392,7 +392,7 @@ export default function EPK() {
               </div>
               
               {/* English */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
@@ -408,7 +408,7 @@ export default function EPK() {
               </div>
 
               {/* Chinese */}
-              <div className="w-full flex-shrink-0 px-4">
+              <div className="w-full flex-shrink-0 px-4 min-w-full">
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
