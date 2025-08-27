@@ -107,8 +107,55 @@ export default function Home() {
           </div>
         </div>
         
+        {/* Music store links */}
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center">
+          <div className="flex space-x-6 justify-center mb-8 text-xs">
+            <a
+              href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              YOUTUBE MUSIC
+              <span 
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                YOUTUBE MUSIC
+              </span>
+            </a>
+            <span className="text-gray-800">•</span>
+            <a
+              href="https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              YOUTUBE
+              <span 
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                YOUTUBE
+              </span>
+            </a>
+            <span className="text-gray-800">•</span>
+            <a
+              href="https://music.apple.com/us/artist/floraluz/1782261856"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              APPLE MUSIC
+              <span 
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                APPLE MUSIC
+              </span>
+            </a>
+          </div>
+        </div>
+
         {/* Bottom email with analog distortion */}
-        <div className="absolute bottom-8 text-xs text-gray-600 tracking-widest relative">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 tracking-widest relative">
           <span className="relative z-10">floraluz333@gmail.com</span>
           <span 
             className="absolute inset-0 text-red-900/15 transform translate-x-px"
