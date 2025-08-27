@@ -1,16 +1,48 @@
 export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white relative overflow-hidden">
-      {/* Analog noise background */}
+      {/* Analog noise background with animation */}
       <div 
-        className="absolute inset-0 opacity-[0.02] pointer-events-none"
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
         style={{
           backgroundImage: `
             radial-gradient(circle at 20% 50%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
             radial-gradient(circle at 80% 30%, rgba(139, 69, 19, 0.08) 0%, transparent 50%),
             radial-gradient(circle at 40% 70%, rgba(220, 38, 38, 0.05) 0%, transparent 50%)
           `,
-          filter: 'blur(40px)'
+          filter: 'blur(40px)',
+          animation: 'analogNoise 4s infinite ease-in-out'
+        }}
+      />
+      
+      {/* Film grain overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.015] pointer-events-none"
+        style={{
+          backgroundImage: `
+            repeating-conic-gradient(from 0deg, 
+              transparent 0deg, 
+              rgba(255, 255, 255, 0.02) 1deg, 
+              transparent 2deg, 
+              rgba(220, 38, 38, 0.01) 3deg,
+              transparent 4deg
+            )
+          `,
+          backgroundSize: '4px 4px',
+          animation: 'filmGrain 0.2s infinite linear'
+        }}
+      />
+      
+      {/* VHS static overlay */}
+      <div 
+        className="absolute inset-0 opacity-[0.008] pointer-events-none"
+        style={{
+          background: `
+            linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%),
+            linear-gradient(0deg, transparent 0%, rgba(220,38,38,0.02) 50%, transparent 100%)
+          `,
+          backgroundSize: '200px 100vh, 100vw 300px',
+          animation: 'vhsStatic 8s infinite linear'
         }}
       />
       
