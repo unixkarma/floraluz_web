@@ -19,7 +19,7 @@ export default function EPK() {
   return (
     <main className="min-h-screen bg-black text-gray-300 font-mono">
       {/* Header */}
-      <div className="text-center py-16 px-5 border-b border-gray-800 bg-gradient-to-b from-black to-gray-950 relative">
+      <div className="text-center py-16 px-5 border-b border-gray-800 bg-black relative">
         {/* Psychedelic Text Left */}
         <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-900/20 text-xs tracking-widest opacity-30 rotate-90 hidden md:block">
           ◊ ∞ ◦ ∆ ◊ ∞ ◦ ∆ ◊ ∞ ◦ ∆
@@ -45,15 +45,58 @@ export default function EPK() {
         
         {/* Hero Section */}
         <div className="text-center mb-20">
-          <div className="inline-block border p-8 bg-gray-900/20 rounded" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
+          <div className="inline-block border p-8 bg-gray-900/20 rounded relative" style={{ borderColor: 'rgba(220, 38, 38, 0.15)' }}>
             <div className="relative">
               <img 
                 src="/floraluz-cover.jpg" 
                 alt="floraluz - Cover Art" 
-                className="w-96 h-72 object-cover border border-dashed"
-                style={{ borderColor: 'rgba(220, 38, 38, 0.2)' }}
+                className="w-96 h-72 object-cover border border-dashed relative z-10"
+                style={{ 
+                  borderColor: 'rgba(220, 38, 38, 0.2)',
+                  filter: 'sepia(0.3) saturate(0.8) contrast(1.1) brightness(0.9)',
+                }}
               />
-              <div className="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full opacity-60"></div>
+              
+              {/* Rust overlay effects */}
+              <div 
+                className="absolute inset-0 pointer-events-none z-20"
+                style={{
+                  background: `
+                    radial-gradient(circle at 10% 20%, rgba(139, 69, 19, 0.15) 0%, transparent 30%),
+                    radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 25%),
+                    radial-gradient(circle at 30% 90%, rgba(184, 115, 51, 0.08) 0%, transparent 20%),
+                    linear-gradient(45deg, transparent 0%, rgba(139, 69, 19, 0.05) 50%, transparent 100%)
+                  `,
+                  mixBlendMode: 'multiply'
+                }}
+              />
+              
+              {/* Analog scan lines */}
+              <div 
+                className="absolute inset-0 pointer-events-none z-20 opacity-20"
+                style={{
+                  backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(139, 69, 19, 0.3) 1px, rgba(139, 69, 19, 0.3) 2px)',
+                  animation: 'scanlines 4s linear infinite'
+                }}
+              />
+              
+              {/* VHS distortion */}
+              <div 
+                className="absolute inset-0 pointer-events-none z-20 opacity-10"
+                style={{
+                  background: 'linear-gradient(90deg, transparent 0%, rgba(220, 38, 38, 0.2) 2%, transparent 4%)',
+                  backgroundSize: '100px 100%',
+                  animation: 'vhsDistortion 6s infinite linear'
+                }}
+              />
+              
+              {/* Corner wear effects */}
+              <div className="absolute top-1 left-1 w-3 h-3 bg-gradient-to-br from-red-900/30 to-transparent rounded-full z-20"></div>
+              <div className="absolute bottom-2 right-3 w-2 h-4 bg-gradient-to-tl from-orange-800/20 to-transparent z-20"></div>
+              <div className="absolute top-3 right-4 w-1 h-6 bg-red-800/15 transform rotate-12 z-20"></div>
+              
+              {/* Original red dot */}
+              <div className="absolute top-2 right-2 w-2 h-2 bg-red-600 rounded-full opacity-60 z-30"></div>
             </div>
           </div>
         </div>
