@@ -113,8 +113,10 @@ export default function EPK() {
               <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
               Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
               <br/><br/>
+              Nuestro sonido está marcado por el frenesí del mundo moderno donde todo parece ir tan rápido, pero al mismo tiempo toma mucha inspiración de la naturaleza y la sutileza de los detalles que pasan desapercibidos para alguien que vive la mayoría del tiempo en una ciudad con una vida que va deprisa.
+              <br/><br/>
               Grooves hipnóticos procesados digitalmente con texturas que evocan nostalgia y calidez. 
-              Future soul y electronic R&B desde una perspectiva latinoamericana genuina.
+              Future soul y electronic R&B desde una propuesta latinoamericana.
               <div className="text-xs text-red-900/40 mt-4 opacity-60 tracking-widest">
                 [ analog_saturation.enabled ]
               </div>
@@ -130,8 +132,10 @@ export default function EPK() {
               <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
               A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
               <br/><br/>
+              Our sound is marked by the frenzy of the modern world where everything seems to move so fast, but at the same time draws much inspiration from nature and the subtlety of details that go unnoticed by someone who spends most of their time in a city living a fast-paced life.
+              <br/><br/>
               Hypnotic grooves digitally processed with textures that evoke nostalgia and warmth. 
-              Future soul and electronic R&B from a genuine Latin American perspective.
+              Future soul and electronic R&B from a Latin American perspective.
             </div>
           </div>
 
@@ -141,11 +145,13 @@ export default function EPK() {
               项目
             </div>
             <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-              <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行，采用明确的低保真美学。
+              <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行。
               这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
               <br/><br/>
+              我们的声音被现代世界的狂热所标记，一切似乎都在快速运转，但同时从自然中汲取大量灵感，关注那些对于大部分时间生活在城市快节奏生活中的人来说容易被忽视的细微之处。
+              <br/><br/>
               数字化处理的催眠节拍，带有唤起怀旧和温暖感的纹理。
-              来自真正拉丁美洲视角的未来灵魂乐和电子R&B。
+              来自拉丁美洲视角的未来灵魂乐和电子R&B。
             </div>
           </div>
         </div>

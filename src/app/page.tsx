@@ -115,21 +115,38 @@ export default function Home() {
             <div className="absolute -bottom-6 left-16 w-1 h-1 bg-red-800/40 rounded-full opacity-50"></div>
           </div>
           
-          {/* Multilingual description with analog distortion */}
+          {/* Binary message */}
           <div className="space-y-8 relative">
-            <div className="space-y-4">
-              <p className="text-gray-400 text-sm tracking-widest uppercase relative">
-                Electronic Music Producer
-                <span className="absolute inset-0 text-red-900/10 transform translate-x-px">Electronic Music Producer</span>
-              </p>
-              <p className="text-gray-400 text-sm tracking-widest uppercase relative">
-                Productor de Música Electrónica
-                <span className="absolute inset-0 text-orange-900/15 transform -translate-x-px">Productor de Música Electrónica</span>
-              </p>
-              <p className="text-gray-400 text-sm tracking-widest relative">
-                电子音乐制作人
-                <span className="absolute inset-0 text-red-800/20 transform translate-y-px">电子音乐制作人</span>
-              </p>
+            <div className="space-y-2 max-w-lg mx-auto">
+              <div className="text-gray-600 text-xs leading-relaxed tracking-widest opacity-80 text-center relative">
+                01000011 01110101 01100001 01101110 01110100 01101111<br/>
+                00100000 01101101 11100001 01110011 00100000 01110011<br/>
+                01101001 01101100 01100101 01101110 01100011 01101001<br/>
+                01101111 01110011 01101111 00100000 01110100 01100101<br/>
+                00100000 01110110 01110101 01100101 01101100 01110110<br/>
+                01100001 01110011 00101100 00100000 01101101 11100001<br/>
+                01110011 00100000 01100110 01110101 01100101 01110010<br/>
+                01110100 01100101 00100000 01110000 01101111 01100100<br/>
+                01110010 11100001 01110011 00100000 01100101 01110011<br/>
+                01100011 01110101 01100011 01101000 01100001 01110010<br/>
+                00101110
+                
+                <span 
+                  className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity duration-300"
+                >
+                  01000011 01110101 01100001 01101110 01110100 01101111<br/>
+                  00100000 01101101 11100001 01110011 00100000 01110011<br/>
+                  01101001 01101100 01100101 01101110 01100011 01101001<br/>
+                  01101111 01110011 01101111 00100000 01110100 01100101<br/>
+                  00100000 01110110 01110101 01100101 01101100 01110110<br/>
+                  01100001 01110011 00101100 00100000 01101101 11100001<br/>
+                  01110011 00100000 01100110 01110101 01100101 01110010<br/>
+                  01110100 01100101 00100000 01110000 01101111 01100100<br/>
+                  01110010 11100001 01110011 00100000 01100101 01110011<br/>
+                  01100011 01110101 01100011 01101000 01100001 01110010<br/>
+                  00101110
+                </span>
+              </div>
             </div>
             
             {/* More rust particles around text */}
