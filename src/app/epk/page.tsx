@@ -182,7 +182,7 @@ export default function EPK() {
                   {item.label}
                   <span className="ml-2 text-[10px] opacity-60">{item.lang}</span>
                   {activeProjectSlide === index && (
-                    <div className="inline-block ml-3 w-1 h-1 bg-red-500 rounded-full opacity-40"></div>
+                    <div className="inline-block ml-2 w-1 h-1 bg-red-500 rounded-full opacity-60 animate-pulse"></div>
                   )}
                 </button>
               ))}
@@ -191,16 +191,19 @@ export default function EPK() {
 
           {/* Slider Content */}
           <div 
-            className="relative select-none cursor-grab active:cursor-grabbing"
+            className="relative select-none cursor-grab active:cursor-grabbing w-full overflow-hidden"
             onTouchStart={(e) => handleTouchStart(e, 'project')}
             ref={projectSliderRef}
           >
             <div 
-              className="flex transition-transform duration-500 ease-in-out touch-scroll scrollbar-hide sm:overflow-x-auto md:overflow-hidden"
-              style={{ transform: `translateX(-${activeProjectSlide * 100}%)` }}
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ 
+                transform: `translateX(-${activeProjectSlide * 33.333}%)`,
+                width: '300%'
+              }}
             >
               {/* Spanish */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> navega entre electronic dance y ambient. 
                   Una propuesta que documenta estados emocionales a través de paisajes sonoros que fusionan lo crudo con lo visionario.
@@ -216,7 +219,7 @@ export default function EPK() {
               </div>
               
               {/* English */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> navigates between electronic dance and ambient. 
                   A proposal that documents emotional states through soundscapes that fuse the raw with the visionary.
@@ -232,7 +235,7 @@ export default function EPK() {
               </div>
 
               {/* Chinese */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
                   <strong className="text-white">floraluz</strong> 在电子舞曲和环境音乐之间航行。
                   这是一个通过声音景观记录情感状态的提案，将原始与幻想融合在一起。
@@ -360,6 +363,9 @@ export default function EPK() {
                 >
                   {item.label}
                   <span className="ml-2 text-[10px] opacity-60">{item.lang}</span>
+                  {activeReleaseSlide === index && (
+                    <div className="inline-block ml-2 w-1 h-1 bg-orange-600 rounded-full opacity-60 animate-pulse"></div>
+                  )}
                 </button>
               ))}
             </div>
@@ -367,16 +373,19 @@ export default function EPK() {
 
           {/* Slider Content */}
           <div 
-            className="relative select-none cursor-grab active:cursor-grabbing"
+            className="relative select-none cursor-grab active:cursor-grabbing w-full overflow-hidden"
             onTouchStart={(e) => handleTouchStart(e, 'release')}
             ref={releaseSliderRef}
           >
             <div 
-              className="flex transition-transform duration-500 ease-in-out touch-scroll scrollbar-hide sm:overflow-x-auto md:overflow-hidden"
-              style={{ transform: `translateX(-${activeReleaseSlide * 100}%)` }}
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ 
+                transform: `translateX(-${activeReleaseSlide * 33.333}%)`,
+                width: '300%'
+              }}
             >
               {/* Spanish */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
@@ -392,7 +401,7 @@ export default function EPK() {
               </div>
               
               {/* English */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
@@ -408,7 +417,7 @@ export default function EPK() {
               </div>
 
               {/* Chinese */}
-              <div className="w-full flex-shrink-0 px-4 min-w-full">
+              <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-center">
                   <div className="text-2xl text-white mb-3 tracking-widest">
                     EP &quot;ITERACIONES&quot;
