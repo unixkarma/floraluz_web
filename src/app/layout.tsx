@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "floraluz",
   description: "Electronic Music Producer - Future Beats Latinoamericano",
   icons: {
-    icon: "/favicon.png",
+    icon: "/favicon.ico",
   },
 };
 
