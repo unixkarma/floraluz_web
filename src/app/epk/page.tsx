@@ -100,7 +100,7 @@ export default function EPK() {
   }
 
   return (
-    <main className="min-h-screen bg-black text-gray-300 font-mono">
+    <main className="min-h-screen bg-black text-gray-300 font-mono overflow-x-hidden">
       {/* Header */}
       <div className="text-center py-16 px-5 border-b border-gray-800 bg-black relative">
         {/* Psychedelic Text Left */}
@@ -113,10 +113,10 @@ export default function EPK() {
         </div>
         
         <div
-          className="text-5xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
+          className="text-3xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
           style={{
             fontFamily: 'Courier New, monospace',
-            transform: 'scaleX(1.6)',
+            transform: 'scaleX(1.2)',
             transformOrigin: 'center',
             letterSpacing: '0.3em',
           }}
@@ -126,7 +126,7 @@ export default function EPK() {
 
         {/* Single Title */}
         <div
-          className="text-2xl md:text-3xl text-gray-300 font-mono tracking-widest mt-4 opacity-90"
+          className="text-base md:text-3xl text-gray-300 font-mono tracking-widest mt-4 opacity-90"
           style={{ textShadow: '1px 1px 0 rgba(59, 130, 246, 0.3)' }}
         >
           {s2}
@@ -155,7 +155,7 @@ export default function EPK() {
                 alt="floraluz - Cover Art"
                 width={384}
                 height={384}
-                className="w-96 h-96 object-cover border border-dashed relative z-10"
+                className="w-64 h-64 md:w-96 md:h-96 object-cover border border-dashed relative z-10"
                 style={{
                   borderColor: 'rgba(220, 38, 38, 0.2)',
                   filter: 'sepia(0.3) saturate(0.8) contrast(1.1) brightness(0.9)',
@@ -207,7 +207,7 @@ export default function EPK() {
         </div>
 
         {/* Project Description Slider */}
-        <div className="bg-black border p-10 rounded mb-16 relative overflow-hidden" style={{ borderColor: 'rgba(59, 130, 246, 0.12)' }}>
+        <div className="bg-black border p-5 md:p-10 rounded mb-16 relative overflow-hidden" style={{ borderColor: 'rgba(59, 130, 246, 0.12)' }}>
           {/* Slider Navigation */}
           <div className="flex justify-center mb-8">
             <div className="flex space-x-4">
@@ -318,7 +318,7 @@ export default function EPK() {
         </div>
 
         {/* Single Player */}
-        <div className="bg-black border border-dashed p-10 rounded mb-16" style={{ borderColor: 'rgba(59, 130, 246, 0.15)' }}>
+        <div className="bg-black border border-dashed p-5 md:p-10 rounded mb-16" style={{ borderColor: 'rgba(59, 130, 246, 0.15)' }}>
           <div className="text-center text-lg text-gray-400 mb-8 tracking-widest font-bold">
             ESCUCHAR • LISTEN • 收听 EP
             <div className="text-xs text-blue-900/30 mt-2 tracking-wider">
@@ -338,7 +338,7 @@ export default function EPK() {
                   alt="noches en vela, Vol. II - Cover Art"
                   width={320}
                   height={320}
-                  className="w-80 h-80 object-cover border border-dashed relative z-10"
+                  className="w-56 h-56 md:w-80 md:h-80 object-cover border border-dashed relative z-10"
                   style={{
                     borderColor: 'rgba(59, 130, 246, 0.2)',
                     filter: 'sepia(0.2) saturate(0.9) contrast(1.05) brightness(0.95)',
@@ -402,7 +402,7 @@ export default function EPK() {
         </div>
 
         {/* Platform Links */}
-        <div className="bg-black border border-gray-700 p-10 text-center rounded mb-16">
+        <div className="bg-black border border-gray-700 p-5 md:p-10 text-center rounded mb-16">
           <div className="text-lg text-gray-400 mb-8 tracking-widest font-bold">
             PLATAFORMAS • PLATFORMS • 平台
           </div>
@@ -435,8 +435,8 @@ export default function EPK() {
         </div>
 
         {/* Binary Message */}
-        <div 
-          className="border border-dashed bg-black/80 p-10 text-center rounded"
+        <div
+          className="border border-dashed bg-black/80 p-5 md:p-10 text-center rounded"
           style={{ borderColor: 'rgba(59, 130, 246, 0.3)' }}
         >
           <div className="text-gray-600 text-xs leading-relaxed tracking-widest opacity-80">

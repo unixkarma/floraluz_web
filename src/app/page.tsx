@@ -56,7 +56,7 @@ export default function Home() {
       />
 
       <div className="flex flex-col items-center justify-center min-h-screen px-4 relative z-10">
-        <div className="text-center space-y-16">
+        <div className="text-center space-y-10 md:space-y-16">
           <div className="relative">
             {/* Glitch layers for floraluz title */}
             <h1 
@@ -157,8 +157,8 @@ export default function Home() {
         </div>
         
         {/* Music store links */}
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center">
-          <div className="flex space-x-6 justify-center mb-8 text-xs">
+        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center w-full px-4">
+          <div className="flex flex-wrap gap-3 justify-center mb-8 text-xs">
             <a
               href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
               target="_blank"
