@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "floraluz",
   description: "Electronic Music Producer - Future Beats Latinoamericano",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
