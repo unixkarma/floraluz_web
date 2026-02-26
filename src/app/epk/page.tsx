@@ -251,27 +251,27 @@ export default function EPK() {
               {/* Spanish */}
               <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-                  <strong className="text-white">floraluz</strong> es el proyecto musical de una persona encantada por las computadoras, la programación y los dispositivos electrónicos. El proyecto nace dentro de una vida donde se debe balancear el estar detrás de un ordenador con la necesidad creativa de expresar música.
+                  <strong className="text-white">floraluz</strong> es el proyecto musical de Quito, Ecuador, de una persona encantada por las computadoras, la programación y los dispositivos electrónicos. El proyecto nace dentro de una vida donde se debe balancear el estar detrás de un ordenador con la necesidad creativa de expresar música.
                   <br/><br/>
-                  El último EP de floraluz, <em>noches en vela, Vol. II</em>, de forma similar al Vol. I, expresa lo que se sienten días que son largos pero parecen cortos, y noches cortas que se sienten largas por el tiempo que se dedica a expresar emociones a través de sonidos, ritmos, melodías y armonías.
+                  Casi un año después del Vol. I, el 27 de febrero de 2026 se lanza <em>noches en vela, Vol. II</em>, el último EP de floraluz. De forma similar al Vol. I, expresa lo que se sienten días que son largos pero parecen cortos, y noches cortas que se sienten largas por el tiempo que se dedica a expresar emociones a través de sonidos, ritmos, melodías y armonías.
                 </div>
               </div>
 
               {/* English */}
               <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-                  <strong className="text-white">floraluz</strong> is the musical project of someone fascinated by computers, programming, and electronic devices. The project emerges from a life where being in front of a screen must be balanced with the creative need to express music.
+                  <strong className="text-white">floraluz</strong> is a musical project from Quito, Ecuador, by someone fascinated by computers, programming, and electronic devices. The project emerges from a life where being in front of a screen must be balanced with the creative need to express music.
                   <br/><br/>
-                  floraluz&apos;s latest EP, <em>noches en vela, Vol. II</em>, similarly to Vol. I, captures what it feels like to live days that are long but seem short, and short nights that feel long because of the time spent channeling emotions through sounds, rhythms, melodies, and harmonies.
+                  Almost a year after Vol. I, on February 27, 2026, <em>noches en vela, Vol. II</em> is released — floraluz&apos;s latest EP. Similarly to Vol. I, it captures what it feels like to live days that are long but seem short, and short nights that feel long because of the time spent channeling emotions through sounds, rhythms, melodies, and harmonies.
                 </div>
               </div>
 
               {/* Chinese */}
               <div className="flex-shrink-0 px-4" style={{ width: '33.333%' }}>
                 <div className="text-sm text-gray-300 leading-relaxed max-w-4xl mx-auto text-justify">
-                  <strong className="text-white">floraluz</strong> 是一个深深着迷于计算机、编程和电子设备的人的音乐项目。这个项目诞生于一种需要在屏幕前的工作与通过音乐表达创造力之间寻求平衡的生活之中。
+                  <strong className="text-white">floraluz</strong> 是一个来自厄瓜多尔基多的音乐项目，由一个深深着迷于计算机、编程和电子设备的人创作。这个项目诞生于一种需要在屏幕前的工作与通过音乐表达创造力之间寻求平衡的生活之中。
                   <br/><br/>
-                  floraluz 的最新 EP，<em>noches en vela, Vol. II</em>，与第一卷相似，表达了那种感觉——漫长却似乎转瞬即逝的白昼，以及因为用来通过声音、节奏、旋律和和声倾注情感而显得格外漫长的短暂夜晚。
+                  在第一卷发行近一年后，2026年2月27日，floraluz 发行了最新 EP <em>noches en vela, Vol. II</em>。与第一卷相似，它表达了那种感觉——漫长却似乎转瞬即逝的白昼，以及因为用来通过声音、节奏、旋律和和声倾注情感而显得格外漫长的短暂夜晚。
                 </div>
               </div>
             </div>
