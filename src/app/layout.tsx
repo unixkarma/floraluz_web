@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import AnalogOverlay from "./components/AnalogOverlay";
 
 export const metadata: Metadata = {
   title: "floraluz",
@@ -14,6 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
+        <AnalogOverlay />
         {children}
       </body>
     </html>

@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function EPK() {
   const [playingTrack, setPlayingTrack] = useState<number | null>(null)
@@ -431,6 +432,12 @@ export default function EPK() {
             >
               [APPLE MUSIC]
             </a>
+            <Link
+              href="/sets"
+              className="inline-block px-6 py-3 text-gray-400 text-xs tracking-wider border border-gray-600 bg-gray-900/80 hover:bg-gray-800 transition-all"
+            >
+              [SETS]
+            </Link>
           </div>
         </div>
 

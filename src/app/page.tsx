@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import MouseTracker from './components/MouseTracker'
 
 export default function Home() {
@@ -68,9 +69,9 @@ export default function Home() {
               {/* Main text */}
               <span className="relative z-30">floraluz</span>
               
-              {/* Glitch layer 1 - red shift */}
-              <span 
-                className="absolute top-0 left-0 text-red-500/30 z-10"
+              {/* Glitch layer 1 */}
+              <span
+                className="absolute top-0 left-0 text-white/20 z-10"
                 style={{
                   transform: 'translate(-2px, 0)',
                   animation: 'glitch1 3s infinite',
@@ -80,9 +81,9 @@ export default function Home() {
                 floraluz
               </span>
               
-              {/* Glitch layer 2 - blue shift */}
-              <span 
-                className="absolute top-0 left-0 text-blue-400/20 z-20"
+              {/* Glitch layer 2 */}
+              <span
+                className="absolute top-0 left-0 text-white/15 z-20"
                 style={{
                   transform: 'translate(2px, 0)',
                   animation: 'glitch2 3s infinite reverse',
@@ -96,7 +97,7 @@ export default function Home() {
               <div 
                 className="absolute inset-0 z-40 pointer-events-none opacity-10"
                 style={{
-                  background: 'repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(220, 38, 38, 0.3) 1px, rgba(220, 38, 38, 0.3) 2px)',
+                  background: 'repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(255, 255, 255, 0.3) 1px, rgba(255, 255, 255, 0.3) 2px)',
                   animation: 'staticNoise 0.1s infinite'
                 }}
               />
@@ -202,6 +203,30 @@ export default function Home() {
                 APPLE MUSIC
               </span>
             </a>
+            <span className="text-gray-800">•</span>
+            <Link
+              href="/sets"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              SETS
+              <span
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                SETS
+              </span>
+            </Link>
+            <span className="text-gray-800">•</span>
+            <Link
+              href="/epk"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              EPK
+              <span
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                EPK
+              </span>
+            </Link>
           </div>
         </div>
 

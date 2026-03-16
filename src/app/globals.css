@@ -160,6 +160,19 @@
     100% { background-position: 100% 0%; }
   }
 
+  @keyframes crtLine {
+    0% { top: -2px; }
+    100% { top: 100vh; }
+  }
+
+  @keyframes trackingNoise {
+    0%, 92% { top: -10px; opacity: 0; }
+    93% { top: 20%; opacity: 1; }
+    94% { top: 22%; opacity: 0.8; }
+    95% { top: 60%; opacity: 0; }
+    96%, 100% { top: -10px; opacity: 0; }
+  }
+
   /* Custom scrollbar hiding */
   .scrollbar-hide {
     -ms-overflow-style: none;  /* IE and Edge */
