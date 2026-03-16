@@ -227,6 +227,18 @@ export default function Home() {
                 EPK
               </span>
             </Link>
+            <span className="text-gray-800">•</span>
+            <Link
+              href="/booking"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider relative"
+            >
+              BOOKING
+              <span
+                className="absolute inset-0 text-red-900/10 transform translate-x-px opacity-0 hover:opacity-100 transition-opacity"
+              >
+                BOOKING
+              </span>
+            </Link>
           </div>
         </div>
 
