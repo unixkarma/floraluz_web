@@ -50,7 +50,7 @@ export default function Sets() {
         </Link>
 
         <div
-          className="text-3xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
+          className="text-2xl sm:text-3xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
           style={{
             fontFamily: 'Courier New, monospace',
             transform: 'scaleX(1.2)',

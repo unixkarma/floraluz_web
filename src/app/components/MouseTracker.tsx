@@ -15,7 +15,7 @@ export default function MouseTracker() {
 
   return (
     <div
-      className="fixed bottom-4 right-4 z-50 text-[10px] text-gray-600 tracking-widest pointer-events-none select-none"
+      className="fixed bottom-4 right-4 z-50 text-[10px] text-gray-600 tracking-widest pointer-events-none select-none hidden md:block"
       style={{ fontFamily: 'Courier New, monospace' }}
     >
       <span className="relative">

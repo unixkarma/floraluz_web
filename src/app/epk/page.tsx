@@ -114,7 +114,7 @@ export default function EPK() {
         </div>
         
         <div
-          className="text-3xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
+          className="text-2xl sm:text-3xl md:text-6xl text-white font-bold mb-4 tracking-widest inline-block"
           style={{
             fontFamily: 'Courier New, monospace',
             transform: 'scaleX(1.2)',
@@ -127,7 +127,7 @@ export default function EPK() {
 
         {/* Single Title */}
         <div
-          className="text-base md:text-3xl text-gray-300 font-mono tracking-widest mt-4 opacity-90"
+          className="text-sm sm:text-base md:text-3xl text-gray-300 font-mono tracking-widest mt-4 opacity-90"
           style={{ textShadow: '1px 1px 0 rgba(59, 130, 246, 0.3)' }}
         >
           {s2}
@@ -156,7 +156,7 @@ export default function EPK() {
                 alt="floraluz - Cover Art"
                 width={384}
                 height={384}
-                className="w-64 h-64 md:w-96 md:h-96 object-cover border border-dashed relative z-10"
+                className="w-48 h-48 sm:w-64 sm:h-64 md:w-96 md:h-96 object-cover border border-dashed relative z-10"
                 style={{
                   borderColor: 'rgba(220, 38, 38, 0.2)',
                   filter: 'sepia(0.3) saturate(0.8) contrast(1.1) brightness(0.9)',
@@ -220,7 +220,7 @@ export default function EPK() {
                 <button
                   key={index}
                   onClick={() => setActiveProjectSlide(index)}
-                  className={`px-4 py-2 text-xs tracking-widest font-bold transition-all ${
+                  className={`px-3 md:px-4 py-3 text-[10px] md:text-xs tracking-widest font-bold transition-all ${
                     activeProjectSlide === index 
                       ? 'text-white border-b border-blue-500' 
                       : 'text-gray-500 hover:text-gray-300'
@@ -339,7 +339,7 @@ export default function EPK() {
                   alt="noches en vela, Vol. II - Cover Art"
                   width={320}
                   height={320}
-                  className="w-56 h-56 md:w-80 md:h-80 object-cover border border-dashed relative z-10"
+                  className="w-44 h-44 sm:w-56 sm:h-56 md:w-80 md:h-80 object-cover border border-dashed relative z-10"
                   style={{
                     borderColor: 'rgba(59, 130, 246, 0.2)',
                     filter: 'sepia(0.2) saturate(0.9) contrast(1.05) brightness(0.95)',

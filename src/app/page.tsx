@@ -63,7 +63,7 @@ export default function Home() {
           <div className="relative">
             {/* Glitch layers for floraluz title */}
             <h1 
-              className="text-7xl md:text-8xl font-light tracking-wider mb-8 relative"
+              className="text-4xl sm:text-5xl md:text-8xl font-light tracking-wider mb-8 relative"
               style={{ fontFamily: 'Courier New, monospace' }}
             >
               {/* Main text */}
@@ -160,8 +160,8 @@ export default function Home() {
         </div>
         
         {/* Music store links */}
-        <div className="absolute bottom-20 left-1/2 transform -translate-x-1/2 text-center w-full px-4">
-          <div className="flex flex-wrap gap-3 justify-center mb-8 text-xs">
+        <div className="absolute bottom-24 md:bottom-20 left-1/2 transform -translate-x-1/2 text-center w-full px-4">
+          <div className="flex flex-wrap gap-2 md:gap-3 justify-center mb-8 text-[10px] md:text-xs">
             <a
               href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
               target="_blank"
@@ -243,7 +243,7 @@ export default function Home() {
         </div>
 
         {/* Bottom email with analog distortion */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-xs text-gray-600 tracking-widest text-center">
+        <div className="absolute bottom-6 md:bottom-8 left-1/2 transform -translate-x-1/2 text-[10px] md:text-xs text-gray-600 tracking-widest text-center">
           <div className="relative inline-block">
             <span className="relative z-10">floraluz333@gmail.com</span>
             <span 
