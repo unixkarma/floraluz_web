@@ -1,3 +1,5 @@
+import MouseTracker from './components/MouseTracker'
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-black text-white relative overflow-hidden" style={{ animation: 'colorInvert1 7s infinite, colorInvert2 12s infinite' }}>
@@ -231,6 +233,7 @@ export default function Home() {
         <div className="absolute bottom-20 right-12 w-2 h-px bg-red-900/20 opacity-50"></div>
       </div>
 
+      <MouseTracker />
     </main>
   )
 }
