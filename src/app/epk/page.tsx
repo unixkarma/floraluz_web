@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -13,8 +13,25 @@ const TRACKS = [
   { title: '6. si la noche tuviese más horas', file: '6.- si la noche tuviese más horas.wav' },
 ]
 
+type PhotoMeta = { src: string; w: number; h: number; zoom: number }
+
 export default function EPK() {
   const [lang, setLang] = useState<'ES' | 'EN'>('ES')
+  const [lightbox, setLightbox] = useState<PhotoMeta | null>(null)
+
+  useEffect(() => {
+    if (!lightbox) return
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setLightbox(null)
+    }
+    document.addEventListener('keydown', onKey)
+    const prev = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      document.removeEventListener('keydown', onKey)
+      document.body.style.overflow = prev
+    }
+  }, [lightbox])
 
   return (
     <main
@@ -45,16 +62,63 @@ export default function EPK() {
           </div>
         </header>
 
-        {/* Cover */}
+        {/* Artist photos — editorial collage, click to open full size */}
         <section>
-          <Image
-            src="/floraluz-cover.jpg"
-            alt="floraluz cover"
-            width={1200}
-            height={1200}
-            className="w-full h-auto"
-            priority
-          />
+          <div className="grid grid-cols-3 grid-rows-2 gap-2">
+            {/* B&W street — dominant, left */}
+            <button
+              type="button"
+              onClick={() => setLightbox({ src: '/epk/DSC00359.jpg', w: 1340, h: 1786, zoom: 1 })}
+              className="col-span-2 row-span-2 overflow-hidden cursor-zoom-in group"
+              aria-label="ver foto en tamaño completo"
+            >
+              <Image
+                src="/epk/DSC00359.jpg"
+                alt="floraluz"
+                width={1340}
+                height={1786}
+                className="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.02]"
+                priority
+                draggable={false}
+              />
+            </button>
+
+            {/* Color graffiti, top-right */}
+            <button
+              type="button"
+              onClick={() => setLightbox({ src: '/epk/IMG_2517.jpg', w: 1350, h: 1800, zoom: 1.4 })}
+              className="aspect-[3/4] overflow-hidden cursor-zoom-in group"
+              aria-label="ver foto en tamaño completo"
+            >
+              <Image
+                src="/epk/IMG_2517.jpg"
+                alt="floraluz"
+                width={1350}
+                height={1800}
+                className="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.02]"
+                style={{ transform: 'scale(1.4)', transformOrigin: 'center bottom' }}
+                draggable={false}
+              />
+            </button>
+
+            {/* B&W smoking, bottom-right */}
+            <button
+              type="button"
+              onClick={() => setLightbox({ src: '/epk/IMG_2635.jpg', w: 1350, h: 1800, zoom: 1 })}
+              className="aspect-[3/4] overflow-hidden cursor-zoom-in group"
+              aria-label="ver foto en tamaño completo"
+            >
+              <Image
+                src="/epk/IMG_2635.jpg"
+                alt="floraluz"
+                width={1350}
+                height={1800}
+                className="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.02]"
+                style={{ transform: 'scale(1.4)', transformOrigin: 'center bottom' }}
+                draggable={false}
+              />
+            </button>
+          </div>
         </section>
 
         {/* Project description */}
@@ -183,6 +247,47 @@ export default function EPK() {
           <div className="text-sm">floraluz333@gmail.com</div>
         </footer>
       </div>
+
+      {/* Lightbox */}
+      {lightbox && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[200] bg-black/95 flex items-center justify-center p-4 cursor-zoom-out"
+        >
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              setLightbox(null)
+            }}
+            aria-label="cerrar"
+            className="absolute top-4 right-4 text-white/80 hover:text-white text-2xl leading-none w-10 h-10 flex items-center justify-center"
+          >
+            ×
+          </button>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="relative max-w-[90vw] max-h-[90vh] aspect-[3/4] overflow-hidden"
+          >
+            <Image
+              src={lightbox.src}
+              alt="floraluz"
+              width={lightbox.w}
+              height={lightbox.h}
+              className="w-full h-full object-cover block"
+              style={{
+                transform: `scale(${lightbox.zoom})`,
+                transformOrigin: 'center bottom',
+              }}
+              sizes="90vw"
+              priority
+              draggable={false}
+            />
+          </div>
+        </div>
+      )}
     </main>
   )
 }
