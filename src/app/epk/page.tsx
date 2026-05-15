@@ -55,10 +55,10 @@ export default function EPK() {
               fontSize: 'clamp(3rem, 12vw, 8rem)',
             }}
           >
-            EPK
+            Floraluz
           </h1>
           <div className="text-xs tracking-widest uppercase text-black/60">
-            Floraluz · noches en vela, Vol. II · EP
+            Último Lanzamiento: noches en vela, Vol. II · EP
           </div>
         </header>
 
@@ -148,13 +148,13 @@ export default function EPK() {
             <p className="text-sm leading-relaxed text-justify">
               <strong>floraluz</strong> es el proyecto musical de Quito, Ecuador, de una persona encantada por las computadoras, la programación y los dispositivos electrónicos. El proyecto nace dentro de una vida donde se debe balancear el estar detrás de un ordenador con la necesidad creativa de expresar música.
               <br /><br />
-              Casi un año después del Vol. I, el 27 de febrero de 2026 se lanza <em>noches en vela, Vol. II</em>, el último EP de floraluz. De forma similar al Vol. I, expresa lo que se sienten días que son largos pero parecen cortos, y noches cortas que se sienten largas por el tiempo que se dedica a expresar emociones a través de sonidos, ritmos, melodías y armonías.
+              Casi un año después del Vol. I, el 27 de febrero de 2026 se lanza <em>noches en vela, Vol. II</em>, el último EP de floraluz: un recopilatorio creado durante un par de meses.
             </p>
           ) : (
             <p className="text-sm leading-relaxed text-justify">
               <strong>floraluz</strong> is a musical project from Quito, Ecuador, by someone fascinated by computers, programming, and electronic devices. The project emerges from a life where being in front of a screen must be balanced with the creative need to express music.
               <br /><br />
-              Almost a year after Vol. I, on February 27, 2026, <em>noches en vela, Vol. II</em> is released — floraluz&apos;s latest EP. Similarly to Vol. I, it captures what it feels like to live days that are long but seem short, and short nights that feel long because of the time spent channeling emotions through sounds, rhythms, melodies, and harmonies.
+              Almost a year after Vol. I, on February 27, 2026, <em>noches en vela, Vol. II</em> is released — floraluz&apos;s latest EP: a compilation put together over a couple of months.
             </p>
           )}
         </section>
