@@ -240,7 +240,7 @@ export default function EPK() {
         </section>
 
         {/* Contact */}
-        <footer className="space-y-2 pt-12">
+        <footer className="space-y-2">
           <div className="text-xs tracking-widest uppercase text-black/60">
             Contacto / Contact
           </div>
