@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const BRAND = 'Floraluz';
+const BRAND = 'floraluz';
 
 // Build a block of binary digits with random scrambling of ~3% of the bits.
 function makeBinaryBlock(rows = 8, bytesPerRow = 6): string {
@@ -71,7 +71,7 @@ export default function Home() {
   useEffect(() => {
     if (!isAnimating) return;
 
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
     const target = BRAND;
     const letterSettleDuration = 800;
     const totalDuration = target.length * letterSettleDuration;
@@ -275,7 +275,7 @@ export default function Home() {
           {/* Brand title bottom-left */}
           <div className="absolute bottom-0 left-8">
             <h1
-              className={`font-black tracking-tight select-none uppercase ${
+              className={`font-black tracking-tight select-none lowercase ${
                 inverted ? 'text-white' : 'text-black'
               }`}
               style={{

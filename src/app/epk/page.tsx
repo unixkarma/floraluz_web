@@ -49,13 +49,13 @@ export default function EPK() {
         {/* Header */}
         <header className="space-y-4">
           <h1
-            className="font-black tracking-tight uppercase leading-none select-none"
+            className="font-black tracking-tight lowercase leading-none select-none"
             style={{
               fontFamily: 'Times New Roman, serif',
               fontSize: 'clamp(3rem, 12vw, 8rem)',
             }}
           >
-            Floraluz
+            floraluz
           </h1>
           <div className="text-xs tracking-widest uppercase text-black/60">
             Último Lanzamiento: noches en vela, Vol. II · EP
