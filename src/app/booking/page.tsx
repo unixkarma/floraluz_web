@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import AnalogOverlay from '../components/AnalogOverlay'
 
 export default function Booking() {
   const glyphPool = '0123456789!@#$%&*[]{}|<>?/\\ΩΨΦΣΠΛΘΔαβγδ∞∑√∫≠←→↑↓◊∆∇◈∴'
@@ -24,7 +25,8 @@ export default function Booking() {
   }, [])
 
   return (
-    <main className="min-h-screen bg-black text-gray-300 font-mono overflow-x-hidden">
+    <main className="min-h-screen bg-black text-gray-300 font-mono overflow-x-hidden" style={{ fontFamily: "'Courier New', monospace" }}>
+      <AnalogOverlay />
       {/* Header */}
       <div className="text-center py-16 px-5 border-b border-gray-800 bg-black relative">
         <Link

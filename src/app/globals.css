@@ -1,12 +1,5 @@
 @import "tailwindcss";
 
-@layer base {
-  body {
-    @apply bg-black text-gray-300;
-    font-family: 'Courier New', monospace;
-  }
-}
-
 @layer utilities {
   @keyframes glitch1 {
     0%, 100% { transform: translate(-2px, 0); }
