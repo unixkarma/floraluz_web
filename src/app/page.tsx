@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -11,7 +10,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 const BRAND = 'floraluz';
 
-// Build a block of binary digits with random scrambling of ~3% of the bits.
 function makeBinaryBlock(rows = 8, bytesPerRow = 6): string {
   const passwordChars = '!@#$%^&*+=?';
   const lines: string[] = [];
@@ -24,7 +22,6 @@ function makeBinaryBlock(rows = 8, bytesPerRow = 6): string {
     }
     lines.push(bytes.join(' '));
   }
-  // Scramble ~3% of bits with weird glyphs (mirrors hashr's quote scrambler)
   const text = lines.join('\n');
   const chars = text.split('');
   const bitIndices: number[] = [];
@@ -46,6 +43,32 @@ function getRandomPosition() {
   };
 }
 
+const SETS = [
+  {
+    title: 'para el jueves I',
+    embedUrl:
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2278403192&color=%2304bcbc&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true',
+  },
+  {
+    title: 'mix para el miércoles I',
+    embedUrl:
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2278399775&color=%23dfb8ac&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true',
+  },
+  {
+    title: 'para el sábado I',
+    embedUrl:
+      'https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2279361551&color=%23ff5500&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true',
+  },
+];
+
+const STREAMING = [
+  { label: 'YOUTUBE MUSIC', href: 'https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg' },
+  { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg' },
+  { label: 'APPLE MUSIC', href: 'https://music.apple.com/us/artist/floraluz/1782261856' },
+  { label: 'SPOTIFY', href: '' },
+  { label: 'BANDCAMP', href: '' },
+];
+
 export default function Home() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [displayText, setDisplayText] = useState(BRAND);
@@ -57,7 +80,6 @@ export default function Home() {
   const [rainColumns, setRainColumns] = useState<string[]>([]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-  const footerRef = useRef<HTMLDivElement>(null);
 
   // Mouse tracker
   useEffect(() => {
@@ -126,7 +148,7 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // Binary rain for the middle (sky-blue) section — 16 columns, regenerated every 200ms
+  // Binary rain for the middle section — 16 columns, regenerated every 200ms
   useEffect(() => {
     const buildColumn = () => {
       let col = '';
@@ -141,12 +163,6 @@ export default function Home() {
   }, []);
 
   // Three-section scroll-pinned animation.
-  // Why gsap.context + ctx.revert(): ScrollTrigger's pin:true wraps the trigger
-  // in a "pin-spacer" <div> outside React's tree. On client-side navigation
-  // (e.g. clicking a footer link), React unmounts the trigger while the spacer
-  // still wraps it — the reconciler then tries to removeChild a node that's no
-  // longer its direct child and throws. ctx.revert() unwraps the spacer
-  // synchronously during cleanup, restoring the DOM React expects.
   useEffect(() => {
     if (!containerRef.current) return;
     const root = containerRef.current;
@@ -181,29 +197,9 @@ export default function Home() {
         },
         '+=0',
       );
-
     }, root);
 
     return () => ctx.revert();
-  }, []);
-
-  // Footer visibility — driven by raw window.scrollY so it's independent of the
-  // GSAP timeline. Visible only at the very top (section 1) and the very bottom
-  // (section 3); hidden the entire time section 2 (cryptic) is on screen.
-  useEffect(() => {
-    const onScroll = () => {
-      if (!footerRef.current) return;
-      const max =
-        document.documentElement.scrollHeight - window.innerHeight;
-      if (max <= 0) return;
-      const p = window.scrollY / max;
-      const visible = p < 0.05 || p > 0.92;
-      footerRef.current.style.opacity = visible ? '1' : '0';
-      footerRef.current.style.pointerEvents = visible ? 'auto' : 'none';
-    };
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const renderPage = (inverted = false) => {
@@ -296,6 +292,7 @@ export default function Home() {
 
   return (
     <>
+      {/* GSAP hero */}
       <div ref={containerRef} className="relative h-screen overflow-hidden">
         {/* First (white) section */}
         <div className="first-section absolute inset-0 w-full h-full">
@@ -304,7 +301,6 @@ export default function Home() {
 
         {/* Second (sky-blue with binary rain) section */}
         <div className="second-section absolute inset-0 w-full h-full bg-sky-300 overflow-hidden">
-          {/* Binary rain */}
           <div className="absolute inset-0 flex justify-between px-2 select-none pointer-events-none">
             {rainColumns.map((col, i) => (
               <pre
@@ -324,7 +320,6 @@ export default function Home() {
             ))}
           </div>
 
-          {/* Discreet email, top-right */}
           <div
             className="absolute top-6 right-6 z-10 text-white/70 select-none"
             style={{
@@ -343,9 +338,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer links — fixed, hidden over section 2 (cryptic) */}
+      {/* Fixed footer — streaming links, always visible */}
       <div
-        ref={footerRef}
         className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-full px-4 text-center pointer-events-none"
         style={{ mixBlendMode: 'difference' }}
       >
@@ -354,156 +348,228 @@ export default function Home() {
             href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
+            className="text-white hover:opacity-60 transition-opacity tracking-wider"
             style={{ fontFamily: 'Courier New, monospace' }}
           >
             YOUTUBE MUSIC
           </a>
-          <span className="text-gray-500">•</span>
+          <span className="text-white/50">•</span>
           <a
             href="https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
+            className="text-white hover:opacity-60 transition-opacity tracking-wider"
             style={{ fontFamily: 'Courier New, monospace' }}
           >
             YOUTUBE
           </a>
-          <span className="text-gray-500">•</span>
+          <span className="text-white/50">•</span>
           <a
             href="https://music.apple.com/us/artist/floraluz/1782261856"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
+            className="text-white hover:opacity-60 transition-opacity tracking-wider"
             style={{ fontFamily: 'Courier New, monospace' }}
           >
             APPLE MUSIC
           </a>
-          <span className="text-gray-500">•</span>
-          <Link
-            href="/sets"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
-            style={{ fontFamily: 'Courier New, monospace' }}
-          >
-            SETS
-          </Link>
-          <span className="text-gray-500">•</span>
-          <Link
-            href="/epk"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
-            style={{ fontFamily: 'Courier New, monospace' }}
-          >
-            EPK
-          </Link>
-          <span className="text-gray-500">•</span>
-          <Link
-            href="/booking"
-            className="text-gray-400 hover:text-white transition-colors tracking-wider"
-            style={{ fontFamily: 'Courier New, monospace' }}
-          >
-            BOOKING
-          </Link>
         </div>
       </div>
-    </>
-  );
-=======
-import CoordCounter from './CoordCounter'
 
-export default function Home() {
-  return (
-    <main
-      className="min-h-screen bg-black text-white relative overflow-hidden"
-      style={{ animation: 'colorInvert1 7s infinite, colorInvert2 12s infinite' }}
-    >
-      {/* Scanlines */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.025]"
-        style={{
-          backgroundImage:
-            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.08) 2px, rgba(255,255,255,0.08) 4px)',
-        }}
-      />
-
-      <div className="flex flex-col items-center justify-center min-h-screen px-4 relative z-10">
-        <div className="text-center space-y-10 md:space-y-16">
-
-          {/* Title */}
-          <div className="relative">
-            <h1
-              className="text-7xl md:text-8xl font-light tracking-wider mb-8"
-              style={{ fontFamily: 'Courier New, monospace' }}
-            >
-              floraluz
-            </h1>
-            <div className="h-px bg-white/15 w-48 mx-auto" />
-          </div>
-
-          {/* Binary message */}
-          <div className="max-w-lg mx-auto">
-            <p className="text-gray-600 text-xs leading-relaxed tracking-widest opacity-70 text-center">
-              01000011 01110101 01100001 01101110 01110100 01101111<br />
-              00100000 01101101 11100001 01110011 00100000 01110011<br />
-              01101001 01101100 01100101 01101110 01100011 01101001<br />
-              01101111 01110011 01101111 00100000 01110100 01100101<br />
-              00100000 01110110 01110101 01100101 01101100 01110110<br />
-              01100001 01110011 00101100 00100000 01101101 11100001<br />
-              01110011 00100000 01100110 01110101 01100101 01110010<br />
-              01110100 01100101 00100000 01110000 01101111 01100100<br />
-              01110010 11100001 01110011 00100000 01100101 01110011<br />
-              01100011 01110101 01100011 01101000 01100001 01110010<br />
-              00101110
+      {/* ── Bio ── */}
+      <section className="bg-white text-black py-32 md:py-48 px-6 md:px-16">
+        <div className="max-w-5xl mx-auto">
+          <h2
+            className="font-black lowercase tracking-tight leading-none mb-16 md:mb-24 select-none"
+            style={{
+              fontFamily: 'Times New Roman, serif',
+              fontSize: 'clamp(4.5rem, 18vw, 14rem)',
+            }}
+          >
+            floraluz
+          </h2>
+          <div
+            className="max-w-2xl ml-auto space-y-8"
+            style={{
+              fontFamily: 'Times New Roman, serif',
+              fontSize: 'clamp(1rem, 1.4vw, 1.2rem)',
+              lineHeight: '1.85',
+            }}
+          >
+            <p>
+              floraluz es música hecha de pantallas encendidas, de madrugadas frente a un ordenador
+              y de las horas robadas al silencio. Un proyecto que nació en Quito, Ecuador, donde la
+              electrónica, el ambient y el downtempo se mezclan con la necesidad de decir algo sin
+              palabras.
+            </p>
+            <p>
+              El 27 de febrero de 2026 llegó{' '}
+              <em>noches en vela, Vol. II</em>, el EP más reciente: seis piezas construidas durante
+              meses de trabajo silencioso. DJ sets y música en vivo disponibles para shows en Quito
+              y alrededores.
             </p>
           </div>
         </div>
+      </section>
 
-        {/* Music links */}
-        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center w-full px-4">
-          <div className="flex flex-wrap gap-3 justify-center mb-8 text-xs">
-            <a
-              href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
-            >
-              YOUTUBE MUSIC
-            </a>
-            <span className="text-gray-800">•</span>
-            <a
-              href="https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
-            >
-              YOUTUBE
-            </a>
-            <span className="text-gray-800">•</span>
-            <a
-              href="https://music.apple.com/us/artist/floraluz/1782261856"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
-            >
-              APPLE MUSIC
-            </a>
+      {/* ── Mixes ── */}
+      <section className="bg-black text-white py-24 px-6 md:px-16">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="text-xs tracking-widest uppercase text-white/30 mb-12"
+            style={{ fontFamily: 'Courier New, monospace' }}
+          >
+            MIXES & DJ SETS
+          </div>
+          <div className="space-y-6">
+            {SETS.map((set, i) => (
+              <div key={i} className="border border-white/10">
+                <div
+                  className="px-4 pt-4 pb-2 text-xs tracking-widest text-white/40"
+                  style={{ fontFamily: 'Courier New, monospace' }}
+                >
+                  [ {String(i + 1).padStart(2, '0')} ] {set.title}
+                </div>
+                <iframe
+                  width="100%"
+                  height="166"
+                  scrolling="no"
+                  frameBorder={0}
+                  allow="autoplay"
+                  src={set.embedUrl}
+                  loading="lazy"
+                  className="block"
+                  style={{ filter: 'saturate(0.6) contrast(1.1)' }}
+                />
+              </div>
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Email */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-gray-600 tracking-widest">
-          <span>floraluz333@gmail.com</span>
-          <span
-            className="ml-1 text-red-800/60"
-            style={{ animation: 'blink 1s infinite' }}
+      {/* ── Streaming ── */}
+      <section className="bg-white text-black py-24 px-6 md:px-16">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="text-xs tracking-widest uppercase text-black/30 mb-12"
+            style={{ fontFamily: 'Courier New, monospace' }}
           >
-            _
-          </span>
+            ESCUCHAR / LISTEN
+          </div>
+          <div className="space-y-3">
+            {STREAMING.map(({ label, href }) => (
+              <a
+                key={label}
+                href={href || '#'}
+                target={href ? '_blank' : undefined}
+                rel={href ? 'noopener noreferrer' : undefined}
+                className={`flex items-baseline gap-3 font-black tracking-tight lowercase transition-opacity hover:opacity-40 ${
+                  !href ? 'opacity-20 pointer-events-none' : ''
+                }`}
+                style={{
+                  fontFamily: 'Times New Roman, serif',
+                  fontSize: 'clamp(1.5rem, 4vw, 3.5rem)',
+                  lineHeight: '1.15',
+                }}
+              >
+                {label}
+                {href && (
+                  <span
+                    className="text-black/30"
+                    style={{ fontFamily: 'Courier New, monospace', fontSize: '0.5em' }}
+                  >
+                    ↗
+                  </span>
+                )}
+                {!href && (
+                  <span
+                    className="text-black/20"
+                    style={{ fontFamily: 'Courier New, monospace', fontSize: '0.4em' }}
+                  >
+                    próximamente
+                  </span>
+                )}
+              </a>
+            ))}
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* XY coordinate counter */}
-      <CoordCounter />
-    </main>
-  )
->>>>>>> 31163e1 (del)
+      {/* ── Video ── */}
+      <section className="bg-black text-white py-24 px-6 md:px-16">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="text-xs tracking-widest uppercase text-white/30 mb-12"
+            style={{ fontFamily: 'Courier New, monospace' }}
+          >
+            VIDEO
+          </div>
+          <div className="aspect-video bg-white/5 border border-white/10 flex items-center justify-center">
+            <span
+              className="text-white/20 text-xs tracking-widest"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              [ VIDEO PRÓXIMAMENTE ]
+            </span>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Shows ── */}
+      <section className="bg-white text-black py-24 px-6 md:px-16">
+        <div className="max-w-4xl mx-auto">
+          <div
+            className="text-xs tracking-widest uppercase text-black/30 mb-16"
+            style={{ fontFamily: 'Courier New, monospace' }}
+          >
+            SHOWS
+          </div>
+
+          <div className="mb-16">
+            <div
+              className="text-[10px] tracking-widest uppercase text-black/25 mb-6"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              PRÓXIMOS
+            </div>
+            <div
+              className="text-sm text-black/25 tracking-wider"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              [ SIN SHOWS ANUNCIADOS ]
+            </div>
+          </div>
+
+          <div>
+            <div
+              className="text-[10px] tracking-widest uppercase text-black/25 mb-6"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              PASADOS
+            </div>
+            <div
+              className="space-y-2 text-sm text-black/35"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              <div className="flex gap-6">
+                <span>2026-02</span>
+                <span>—</span>
+                <span>Quito, EC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <footer className="bg-black text-white py-24 px-6 text-center">
+        <div
+          className="mt-10 text-[10px] text-white/15 tracking-widest"
+          style={{ fontFamily: 'Courier New, monospace' }}
+        >
+          [ floraluz :: 2026 ]
+        </div>
+      </footer>
+    </>
+  );
 }
