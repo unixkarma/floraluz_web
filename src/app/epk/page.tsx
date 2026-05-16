@@ -62,28 +62,10 @@ export default function EPK() {
           </div>
         </header>
 
-        {/* Artist photos — editorial collage, click to open full size */}
+        {/* Artist photos — click to open full size */}
         <section>
-          <div className="grid grid-cols-3 grid-rows-2 gap-2">
-            {/* B&W street — dominant, left */}
-            <button
-              type="button"
-              onClick={() => setLightbox({ src: '/epk/DSC00359.jpg', w: 1340, h: 1786, zoom: 1 })}
-              className="col-span-2 row-span-2 overflow-hidden cursor-zoom-in group"
-              aria-label="ver foto en tamaño completo"
-            >
-              <Image
-                src="/epk/DSC00359.jpg"
-                alt="floraluz"
-                width={1340}
-                height={1786}
-                className="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.02]"
-                priority
-                draggable={false}
-              />
-            </button>
-
-            {/* Color graffiti, top-right */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* Color graffiti */}
             <button
               type="button"
               onClick={() => setLightbox({ src: '/epk/IMG_2517.jpg', w: 1350, h: 1800, zoom: 1.4 })}
@@ -97,11 +79,12 @@ export default function EPK() {
                 height={1800}
                 className="w-full h-full object-cover block transition-transform duration-300 group-hover:scale-[1.02]"
                 style={{ transform: 'scale(1.4)', transformOrigin: 'center bottom' }}
+                priority
                 draggable={false}
               />
             </button>
 
-            {/* B&W smoking, bottom-right */}
+            {/* B&W smoking */}
             <button
               type="button"
               onClick={() => setLightbox({ src: '/epk/IMG_2635.jpg', w: 1350, h: 1800, zoom: 1 })}
