@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
@@ -406,4 +407,103 @@ export default function Home() {
       </div>
     </>
   );
+=======
+import CoordCounter from './CoordCounter'
+
+export default function Home() {
+  return (
+    <main
+      className="min-h-screen bg-black text-white relative overflow-hidden"
+      style={{ animation: 'colorInvert1 7s infinite, colorInvert2 12s infinite' }}
+    >
+      {/* Scanlines */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-[0.025]"
+        style={{
+          backgroundImage:
+            'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.08) 2px, rgba(255,255,255,0.08) 4px)',
+        }}
+      />
+
+      <div className="flex flex-col items-center justify-center min-h-screen px-4 relative z-10">
+        <div className="text-center space-y-10 md:space-y-16">
+
+          {/* Title */}
+          <div className="relative">
+            <h1
+              className="text-7xl md:text-8xl font-light tracking-wider mb-8"
+              style={{ fontFamily: 'Courier New, monospace' }}
+            >
+              floraluz
+            </h1>
+            <div className="h-px bg-white/15 w-48 mx-auto" />
+          </div>
+
+          {/* Binary message */}
+          <div className="max-w-lg mx-auto">
+            <p className="text-gray-600 text-xs leading-relaxed tracking-widest opacity-70 text-center">
+              01000011 01110101 01100001 01101110 01110100 01101111<br />
+              00100000 01101101 11100001 01110011 00100000 01110011<br />
+              01101001 01101100 01100101 01101110 01100011 01101001<br />
+              01101111 01110011 01101111 00100000 01110100 01100101<br />
+              00100000 01110110 01110101 01100101 01101100 01110110<br />
+              01100001 01110011 00101100 00100000 01101101 11100001<br />
+              01110011 00100000 01100110 01110101 01100101 01110010<br />
+              01110100 01100101 00100000 01110000 01101111 01100100<br />
+              01110010 11100001 01110011 00100000 01100101 01110011<br />
+              01100011 01110101 01100011 01101000 01100001 01110010<br />
+              00101110
+            </p>
+          </div>
+        </div>
+
+        {/* Music links */}
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 text-center w-full px-4">
+          <div className="flex flex-wrap gap-3 justify-center mb-8 text-xs">
+            <a
+              href="https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
+            >
+              YOUTUBE MUSIC
+            </a>
+            <span className="text-gray-800">•</span>
+            <a
+              href="https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
+            >
+              YOUTUBE
+            </a>
+            <span className="text-gray-800">•</span>
+            <a
+              href="https://music.apple.com/us/artist/floraluz/1782261856"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-400 transition-colors tracking-wider"
+            >
+              APPLE MUSIC
+            </a>
+          </div>
+        </div>
+
+        {/* Email */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-xs text-gray-600 tracking-widest">
+          <span>floraluz333@gmail.com</span>
+          <span
+            className="ml-1 text-red-800/60"
+            style={{ animation: 'blink 1s infinite' }}
+          >
+            _
+          </span>
+        </div>
+      </div>
+
+      {/* XY coordinate counter */}
+      <CoordCounter />
+    </main>
+  )
+>>>>>>> 31163e1 (del)
 }
