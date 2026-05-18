@@ -208,7 +208,7 @@ export default function Home() {
 
     return (
       <div
-        className={`relative min-h-screen overflow-hidden ${
+        className={`relative min-h-[100svh] overflow-hidden ${
           inverted ? 'bg-black' : 'bg-white'
         }`}
       >
@@ -233,7 +233,7 @@ export default function Home() {
         </div>
 
         {/* Foreground */}
-        <div className="relative z-10 min-h-screen">
+        <div className="relative z-10 min-h-[100svh]">
           {/* Logo top-left */}
           <div
             className="absolute top-6 left-6 select-none"
@@ -293,7 +293,7 @@ export default function Home() {
   return (
     <>
       {/* GSAP hero */}
-      <div ref={containerRef} className="relative h-screen overflow-hidden">
+      <div ref={containerRef} className="relative h-[100svh] overflow-hidden">
         {/* First (white) section */}
         <div className="first-section absolute inset-0 w-full h-full">
           {renderPage(false)}
