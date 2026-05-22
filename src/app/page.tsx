@@ -65,7 +65,7 @@ const STREAMING = [
   { label: 'YOUTUBE MUSIC', href: 'https://music.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg' },
   { label: 'YOUTUBE', href: 'https://www.youtube.com/channel/UCNT-gxhr3otfMZlk4-EyaFg' },
   { label: 'APPLE MUSIC', href: 'https://music.apple.com/us/artist/floraluz/1782261856' },
-  { label: 'SPOTIFY', href: '' },
+  { label: 'SPOTIFY', href: 'https://open.spotify.com/artist/4mefLsDD3aaPXTVPhhsfow' },
   { label: 'BANDCAMP', href: '' },
 ];
 
@@ -372,6 +372,16 @@ export default function Home() {
             style={{ fontFamily: 'Courier New, monospace' }}
           >
             APPLE MUSIC
+          </a>
+          <span className="text-white/50">•</span>
+          <a
+            href="https://open.spotify.com/artist/4mefLsDD3aaPXTVPhhsfow"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-white hover:opacity-60 transition-opacity tracking-wider"
+            style={{ fontFamily: 'Courier New, monospace' }}
+          >
+            SPOTIFY
           </a>
         </div>
       </div>
