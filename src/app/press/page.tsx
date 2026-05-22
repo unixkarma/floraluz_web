@@ -14,9 +14,13 @@ const PHOTOS = [
   { src: '/epk/newlaunchpad.jpg', alt: 'floraluz — launchpad', filename: 'floraluz-photo-4.jpg', w: 3024, h: 3024 },
 ];
 
-// Pega aquí el smart link de 320 (song.link / Odesli) cuando esté disponible.
-// Mientras esté vacío, el botón "ESCUCHAR" no se muestra.
-const SMART_LINK: string = '';
+// Enlaces del sencillo 320 por plataforma.
+const LISTEN = [
+  { label: 'Spotify', href: 'https://open.spotify.com/album/6CauWWvwKYbTYdvb1OfsQk' },
+  { label: 'Apple Music', href: 'https://music.apple.com/us/album/320-single/6768660992' },
+  { label: 'YouTube Music', href: 'https://music.youtube.com/playlist?list=OLAK5uy_nrqqxE8xAna40kthOqbtiXJNiqN9IZl1Y' },
+  { label: 'YouTube', href: 'https://www.youtube.com/watch?v=RbABlYODGMk&list=OLAK5uy_kKBLdB1jBAIKLoZQ8ORHURTm_Cb4RFQf0' },
+];
 
 export default function Press() {
   const [copied, setCopied] = useState<string | null>(null);
@@ -108,16 +112,20 @@ export default function Press() {
                 320
               </h2>
               <div className="text-sm text-black/70">22 de mayo de 2026</div>
-              {SMART_LINK && (
-                <a
-                  href={SMART_LINK}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block text-xs tracking-widest uppercase text-black/40 hover:text-black transition-colors border border-black/15 hover:border-black/40 px-6 py-3 mt-2"
-                >
-                  → ESCUCHAR / LISTEN
-                </a>
-              )}
+              <div className="text-[10px] tracking-widest uppercase text-black/30 pt-1">[ ESCUCHAR / LISTEN ]</div>
+              <div className="flex flex-wrap gap-2">
+                {LISTEN.map((l) => (
+                  <a
+                    key={l.label}
+                    href={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block text-[11px] tracking-widest uppercase text-black/40 hover:text-black transition-colors border border-black/15 hover:border-black/40 px-4 py-2"
+                  >
+                    {l.label}
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </section>
