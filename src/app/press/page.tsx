@@ -10,8 +10,7 @@ const BIO_LONG =
 const PHOTOS = [
   { src: '/epk/IMG_2517_bw.jpg', alt: 'floraluz — cara cubierta', filename: 'floraluz-photo-1.jpg', w: 1350, h: 1800 },
   { src: '/epk/newshirt.jpg', alt: 'floraluz — newshirt', filename: 'floraluz-photo-2.jpg', w: 3024, h: 3024 },
-  { src: '/epk/IMG_2635.jpg', alt: 'floraluz — b&w', filename: 'floraluz-photo-3.jpg', w: 1350, h: 1800 },
-  { src: '/epk/newlaunchpad.jpg', alt: 'floraluz — launchpad', filename: 'floraluz-photo-4.jpg', w: 3024, h: 3024 },
+  { src: '/epk/newlaunchpad.jpg', alt: 'floraluz — launchpad', filename: 'floraluz-photo-3.jpg', w: 3024, h: 3024 },
 ];
 
 // Enlaces del sencillo 320 por plataforma.
