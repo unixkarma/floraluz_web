@@ -79,6 +79,7 @@ export default function Home() {
   const [binaryAPos, setBinaryAPos] = useState({ top: '40%', left: '30%' });
   const [binaryBPos, setBinaryBPos] = useState({ top: '50%', left: '60%' });
   const [rainColumns, setRainColumns] = useState<string[]>([]);
+  const [secondSectionRed, setSecondSectionRed] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -160,6 +161,14 @@ export default function Home() {
 
     setRainColumns(buildAll());
     const interval = setInterval(() => setRainColumns(buildAll()), 200);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Second section background — toggle blue <-> intense red every 10s
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSecondSectionRed((prev) => !prev);
+    }, 10000);
     return () => clearInterval(interval);
   }, []);
 
@@ -301,7 +310,12 @@ export default function Home() {
         </div>
 
         {/* Second (sky-blue with binary rain) section */}
-        <div className="second-section absolute inset-0 w-full h-full bg-sky-300 overflow-hidden">
+        <div
+          className="second-section absolute inset-0 w-full h-full overflow-hidden"
+          style={{
+            backgroundColor: secondSectionRed ? '#e00000' : '#7dd3fc',
+          }}
+        >
           <div className="absolute inset-0 flex justify-between px-2 select-none pointer-events-none">
             {rainColumns.map((col, i) => (
               <pre
