@@ -17,6 +17,7 @@ import { createWebglRenderer, type WebglRenderer } from "@renderers/webgl/render
 import { useAudioAnalysis } from "./useAudioAnalysis";
 import { useMidiControl, type MidiControl } from "./useMidiControl";
 import { VISUALS_CHANNEL } from "./broadcast";
+import { useBridge } from "./useBridge";
 
 // 4 zones so the reactive mapping is exactly bpm / low / mid / high — see
 // engine/audio/mapping.ts. Manual mode still lets you repaint any of them.
@@ -47,6 +48,11 @@ export default function VisualsDebugPage() {
   audioConnectedRef.current = audio.connected;
   const audioTickRef = useRef(audio.tick);
   audioTickRef.current = audio.tick;
+  // Art-Net bridge for the pixel tubes (tools/artnet-bridge). Same frame the
+  // output window gets, just over a WebSocket to the Node process.
+  const bridge = useBridge();
+  const bridgeSendRef = useRef(bridge.send);
+  bridgeSendRef.current = bridge.send;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -80,7 +86,9 @@ export default function VisualsDebugPage() {
       }
 
       renderer.draw(live, t);
-      channel.postMessage({ state: live, beatPulse: analysis.beatPulse });
+      const frame = { state: live, beatPulse: analysis.beatPulse };
+      channel.postMessage(frame);
+      bridgeSendRef.current(frame);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);
@@ -149,6 +157,14 @@ export default function VisualsDebugPage() {
         >
           abrir salida ↗
         </button>
+        <div
+          className={`absolute left-4 top-12 rounded bg-black/60 px-3 py-1 text-xs ${
+            bridge.connected ? "text-emerald-400" : "text-white/40"
+          }`}
+          title="tools/artnet-bridge — npm run bridge"
+        >
+          tubos {bridge.connected ? "● conectado" : "○ sin bridge"}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-6 border-t border-white/10 bg-neutral-950 p-4 text-sm">
