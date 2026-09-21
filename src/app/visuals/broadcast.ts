@@ -6,7 +6,4 @@
  */
 export const VISUALS_CHANNEL = "floraluz-visuals";
 
-export interface VisualsFrameMessage {
-  state: import("@engine/types").LightState;
-  beatPulse: number;
-}
+export type VisualsFrameMessage = import("@engine/types").Frame;

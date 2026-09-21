@@ -1,5 +1,7 @@
 # artnet-bridge — tubos pixel (WLED)
 
+Visión completa del sistema: [`docs/visuals.md`](../../docs/visuals.md).
+
 ```
 /visuals (browser) ──WS 9500──▶ bridge (Node) ──Art-Net UDP──▶ ESP32/WLED ──▶ tiras WS2811
 ```

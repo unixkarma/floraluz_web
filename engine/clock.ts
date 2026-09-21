@@ -112,3 +112,23 @@ export function createMidiClock() {
 }
 
 export type MidiClock = ReturnType<typeof createMidiClock>;
+
+/**
+ * Musical rates for `chaseSpeed` while a MIDI clock runs: the 0-1 slider
+ * snaps to beats-per-cycle so a chase always lands on the grid. Without a
+ * clock the same slider is a free-running speed.
+ */
+export const CHASE_RATES_BEATS = [16, 8, 4, 2, 1, 0.5] as const;
+
+export function chaseRateBeats(chaseSpeed: number): number {
+  const i = Math.min(CHASE_RATES_BEATS.length - 1, Math.floor(chaseSpeed * CHASE_RATES_BEATS.length));
+  return CHASE_RATES_BEATS[i];
+}
+
+/** Phase in cycles for the current frame — bar-locked with a clock, free-running without. */
+export function chasePhase(clock: MidiClockSnapshot | null, chaseSpeed: number, timeSec: number): number {
+  if (clock && clock.running) {
+    return (clock.beat + clock.beatPhase) / chaseRateBeats(chaseSpeed);
+  }
+  return timeSec * (0.2 + chaseSpeed * 2.5);
+}

@@ -22,7 +22,7 @@
  */
 import dgram from "node:dgram";
 import { WebSocketServer } from "ws";
-import type { LightState } from "../../engine/types";
+import type { Frame } from "../../engine/types";
 import { pixelCount, renderPixels, type PixelLayout } from "../../engine/pixel";
 import { ARTNET_PORT, rgbToArtDmxPackets } from "../../renderers/artnet/packet";
 
@@ -40,11 +40,6 @@ const layout: PixelLayout = {
     .map(Number),
   gamma: 2.2,
 };
-
-interface Frame {
-  state: LightState;
-  beatPulse: number;
-}
 
 let latest: Frame | null = null;
 let lastFrameAt = 0;
@@ -80,7 +75,7 @@ setInterval(() => {
     send(rgb);
     return;
   }
-  renderPixels(latest.state, latest.beatPulse, (now - t0) / 1000, layout, rgb);
+  renderPixels(latest, (now - t0) / 1000, layout, rgb);
   send(rgb);
 }, 1000 / FPS);
 

@@ -1,11 +1,12 @@
 /**
- * Phase-1 WebGL renderer: draws each zone as a vertical bar whose color/
- * brightness comes straight from `LightState`. No effects engine yet
- * (chase/movement land with the audio + performer layers in phases 2-3) —
- * this exists to prove the state -> pixels path and give the debug UI
- * something to look at.
+ * WebGL renderer for the projector: each zone is a vertical bar in the
+ * zone's colour. Brightness = intensity × master, modulated by the chase
+ * (a wave across the bars, position from the frame's chasePhase so it is
+ * bar-locked with Ableton's clock) by `movement`, plus the beat pulse as a
+ * white lift. Intentionally simple — the tubes are the hero, this is the
+ * backdrop.
  */
-import type { LightState } from "../../engine/types";
+import type { Frame } from "../../engine/types";
 
 const VERTEX_SRC = `
   attribute vec2 a_position;
@@ -55,7 +56,7 @@ function hsvToRgb(h: number, s: number, v: number): [number, number, number] {
 }
 
 export interface WebglRenderer {
-  draw(state: LightState, tNowMs: number): void;
+  draw(frame: Frame, tNowMs: number): void;
   dispose(): void;
 }
 
@@ -95,9 +96,10 @@ export function createWebglRenderer(canvas: HTMLCanvasElement): WebglRenderer {
     gl!.viewport(0, 0, canvas.width, canvas.height);
   }
 
-  function draw(state: LightState, tNowMs: number) {
+  function draw(frame: Frame, tNowMs: number) {
     resize();
-    const { bus, zones } = state;
+    const { bus, zones } = frame.state;
+    const { beatPulse, chasePhase } = frame;
 
     // Strobe: hard on/off flicker gated by u_strobe, frequency scales with the param.
     const strobeOn =
@@ -114,12 +116,16 @@ export function createWebglRenderer(canvas: HTMLCanvasElement): WebglRenderer {
 
     zones.forEach((zone, i) => {
       const [r, g, b] = hsvToRgb(zone.hue, zone.saturation, 1);
-      const level = zone.intensity * bus.master;
+      // Chase: one wave cycle spans `spread` of the bar row, travelling with chasePhase.
+      const wave = 0.5 + 0.5 * Math.sin(2 * Math.PI * ((i / n) * (0.5 + bus.spread * 1.5) - chasePhase + zone.offset));
+      const chase = (1 - bus.movement) + bus.movement * wave;
+      const level = zone.intensity * chase * bus.master;
+      const lift = beatPulse * 0.25 * bus.master;
       const cx = -1 + cellWidth * (i + 0.5);
 
       gl!.uniform2f(offsetLoc, cx, 0);
       gl!.uniform2f(scaleLoc, cellWidth / 2 - gutter, 1);
-      gl!.uniform3f(colorLoc, r * level, g * level, b * level);
+      gl!.uniform3f(colorLoc, Math.min(1, r * level + lift), Math.min(1, g * level + lift), Math.min(1, b * level + lift));
       gl!.drawArrays(gl!.TRIANGLES, 0, 6);
     });
   }

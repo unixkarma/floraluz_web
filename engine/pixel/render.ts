@@ -1,4 +1,4 @@
-import type { LightState, Zone } from "../types";
+import type { Frame, Zone } from "../types";
 import { pixelCount, type PixelLayout } from "./types";
 
 /**
@@ -8,24 +8,21 @@ import { pixelCount, type PixelLayout } from "./types";
  *   - VU fill: the zone's intensity lights that fraction of the tube from
  *     the bottom in the zone's colour; the rest idles at a dim floor so the
  *     tube still reads as an object between hits.
- *   - Wave: a travelling sine along the tube, phase driven by chaseSpeed +
- *     the zone's offset, blended in by bus.movement. spread sets how many
- *     wave cycles fit in one tube.
+ *   - Wave: a travelling sine along the tube driven by the frame's
+ *     chasePhase (bar-locked when Ableton's clock runs) + the zone's offset,
+ *     blended in by bus.movement. spread sets how many wave cycles fit in
+ *     one tube.
  *   - Beat: beatPulse is an additive white burst from the tube's centre
  *     outwards on every tube (HTP with the colour underneath), so the kick
  *     is readable no matter which zone the tube shows.
  *   - strobe / blackout / master behave like the WebGL renderer.
  *
  * `out` must be pixelCount(layout) * 3 bytes; it is filled in place so the
- * bridge can reuse one buffer per frame. `timeSec` is monotonic seconds.
+ * bridge can reuse one buffer per frame. `timeSec` (monotonic seconds) is
+ * only used for the strobe gate.
  */
-export function renderPixels(
-  state: LightState,
-  beatPulse: number,
-  timeSec: number,
-  layout: PixelLayout,
-  out: Uint8Array,
-): Uint8Array {
+export function renderPixels(frame: Frame, timeSec: number, layout: PixelLayout, out: Uint8Array): Uint8Array {
+  const { state, beatPulse, chasePhase } = frame;
   const n = pixelCount(layout);
   if (out.length < n * 3) throw new Error(`renderPixels: out needs ${n * 3} bytes, got ${out.length}`);
 
@@ -44,7 +41,7 @@ export function renderPixels(
   const master = bus.master * strobeGate;
   const gamma = layout.gamma ?? 2.2;
   const cycles = 0.5 + bus.spread * 2.5;
-  const phase = timeSec * (0.2 + bus.chaseSpeed * 2.5);
+  const phase = chasePhase;
   const beat = clamp01(beatPulse);
   const ppt = layout.pixelsPerTube;
   const flipped = new Set(layout.flipped ?? []);

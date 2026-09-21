@@ -10,7 +10,7 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { createDefaultLightState, type LightState } from "@engine/types";
-import { createMidiClock, createTapTempo } from "@engine/clock";
+import { chasePhase, createMidiClock, createTapTempo } from "@engine/clock";
 import { createEnvelopeFollower } from "@engine/audio/envelope";
 import { lerpLightState, SCENE_SLOTS } from "@engine/scenes";
 import { applyAudioReactive, AUDIO_ZONE_LABELS } from "@engine/audio/mapping";
@@ -133,8 +133,12 @@ export default function VisualsDebugPage() {
         flashElRef.current.style.opacity = String(analysis.beatPulse * bpmFlashVisibilityRef.current);
       }
 
-      renderer.draw(live, t);
-      const frame = { state: live, beatPulse: analysis.beatPulse };
+      const frame = {
+        state: live,
+        beatPulse: analysis.beatPulse,
+        chasePhase: chasePhase(clock.running ? clock : null, live.bus.chaseSpeed, t / 1000),
+      };
+      renderer.draw(frame, t);
       channel.postMessage(frame);
       bridgeSendRef.current(frame);
       raf = requestAnimationFrame(loop);

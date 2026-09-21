@@ -11,21 +11,19 @@
  * control window broadcasts over BroadcastChannel.
  */
 import { useEffect, useRef } from "react";
-import { createDefaultLightState, type LightState } from "@engine/types";
+import { createDefaultLightState, type Frame } from "@engine/types";
 import { createWebglRenderer, type WebglRenderer } from "@renderers/webgl/renderer";
 import { VISUALS_CHANNEL, type VisualsFrameMessage } from "../broadcast";
 
 export default function VisualsOutputPage() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const flashElRef = useRef<HTMLDivElement>(null);
-  const stateRef = useRef<LightState>(createDefaultLightState());
-  const beatPulseRef = useRef(0);
+  const frameRef = useRef<Frame>({ state: createDefaultLightState(), beatPulse: 0, chasePhase: 0 });
 
   useEffect(() => {
     const channel = new BroadcastChannel(VISUALS_CHANNEL);
     channel.onmessage = (e: MessageEvent<VisualsFrameMessage>) => {
-      stateRef.current = e.data.state;
-      beatPulseRef.current = e.data.beatPulse;
+      frameRef.current = e.data;
     };
     return () => channel.close();
   }, []);
@@ -37,8 +35,8 @@ export default function VisualsOutputPage() {
 
     let raf = 0;
     const loop = (t: number) => {
-      renderer.draw(stateRef.current, t);
-      if (flashElRef.current) flashElRef.current.style.opacity = String(beatPulseRef.current);
+      renderer.draw(frameRef.current, t);
+      if (flashElRef.current) flashElRef.current.style.opacity = String(frameRef.current.beatPulse);
       raf = requestAnimationFrame(loop);
     };
     raf = requestAnimationFrame(loop);

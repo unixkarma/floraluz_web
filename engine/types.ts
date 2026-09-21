@@ -50,6 +50,24 @@ export interface LightState {
   zones: Zone[];
 }
 
+/**
+ * One rendered frame: the state plus the two per-frame signals every
+ * renderer (WebGL, pixel tubes, DMX) needs but that don't belong in the
+ * scene itself. This is what the control page broadcasts to the output
+ * window and streams to the Art-Net bridge.
+ */
+export interface Frame {
+  state: LightState;
+  /** Decaying 0-1 hit per beat (audio detector and/or MIDI clock, HTP). */
+  beatPulse: number;
+  /**
+   * Chase phase in cycles (fractional part is the position). Bar-locked
+   * when a MIDI clock runs, wall-time otherwise — see engine/clock
+   * `chasePhase`. Renderers use this, never raw time, for anything rhythmic.
+   */
+  chasePhase: number;
+}
+
 export const DEFAULT_ZONE_COUNT = 6;
 
 export function createDefaultZone(index: number, count: number): Zone {
