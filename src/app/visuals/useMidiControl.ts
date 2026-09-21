@@ -44,6 +44,8 @@ export interface MidiControlHandlers {
   onCC?: (paramId: string, value01: number) => void;
   /** Note-on treated as a button press (blackout, mode toggles, scene fires…). */
   onTrigger?: (paramId: string) => void;
+  /** System-realtime bytes (0xF8 clock tick, 0xFA/0xFB/0xFC transport) with the event's timestamp — for the MIDI clock. */
+  onRealtime?: (status: number, timeStampMs: number) => void;
 }
 
 export function useMidiControl(handlers: MidiControlHandlers) {
@@ -92,7 +94,12 @@ export function useMidiControl(handlers: MidiControlHandlers) {
 
     function handleMessage(e: MIDIMessageEvent) {
       const data = e.data;
-      if (!data || data.length < 2) return;
+      if (!data || data.length === 0) return;
+      if (data[0] >= 0xf8) {
+        handlersRef.current.onRealtime?.(data[0], e.timeStamp);
+        return;
+      }
+      if (data.length < 2) return;
       const [status, d1, d2 = 0] = data;
       const type = status & 0xf0;
       const channel = status & 0x0f;

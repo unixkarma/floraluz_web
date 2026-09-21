@@ -10,7 +10,9 @@
  */
 import { useEffect, useRef, useState } from "react";
 import { createDefaultLightState, type LightState } from "@engine/types";
-import { createTapTempo } from "@engine/clock";
+import { createMidiClock, createTapTempo } from "@engine/clock";
+import { createEnvelopeFollower } from "@engine/audio/envelope";
+import { lerpLightState, SCENE_SLOTS } from "@engine/scenes";
 import { applyAudioReactive, AUDIO_ZONE_LABELS } from "@engine/audio/mapping";
 import { SILENT_ANALYSIS, type AudioAnalysis } from "@engine/audio/types";
 import { createWebglRenderer, type WebglRenderer } from "@renderers/webgl/renderer";
@@ -18,6 +20,7 @@ import { useAudioAnalysis } from "./useAudioAnalysis";
 import { useMidiControl, type MidiControl } from "./useMidiControl";
 import { VISUALS_CHANNEL } from "./broadcast";
 import { useBridge } from "./useBridge";
+import { useScenes } from "./useScenes";
 
 // 4 zones so the reactive mapping is exactly bpm / low / mid / high — see
 // engine/audio/mapping.ts. Manual mode still lets you repaint any of them.
@@ -29,6 +32,10 @@ export default function VisualsDebugPage() {
   const [audioMode, setAudioMode] = useState(false);
   const [liveAnalysis, setLiveAnalysis] = useState<AudioAnalysis>(SILENT_ANALYSIS);
   const [bpmFlashVisibility, setBpmFlashVisibility] = useState(0.8);
+  const [clockBpm, setClockBpm] = useState<number | null>(null);
+  const [sceneFadeMs, setSceneFadeMs] = useState(400);
+  const [armSave, setArmSave] = useState(false);
+  const [activeScene, setActiveScene] = useState<number | null>(null);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const flashElRef = useRef<HTMLDivElement>(null);
@@ -40,6 +47,18 @@ export default function VisualsDebugPage() {
   const bpmFlashVisibilityRef = useRef(bpmFlashVisibility);
   bpmFlashVisibilityRef.current = bpmFlashVisibility;
   const tapTempoRef = useRef(createTapTempo());
+  // MIDI clock from Ableton (IAC bus with Sync on). While it runs, its
+  // downbeats drive beatPulse (HTP with the audio detector) and its BPM
+  // replaces the audio estimate — grid-exact even during breaks with no kick.
+  const midiClockRef = useRef(createMidiClock());
+  const clockPulseRef = useRef(createEnvelopeFollower(5, 150));
+  // Scene crossfade in flight: rendered every frame in the rAF loop, and
+  // React state catches up at ~10Hz so the sliders visibly move to the
+  // scene without a setState per frame.
+  const fadeRef = useRef<{ from: LightState; to: LightState; start: number; dur: number } | null>(null);
+  const scenes = useScenes();
+  const sceneFadeMsRef = useRef(sceneFadeMs);
+  sceneFadeMsRef.current = sceneFadeMs;
   const audio = useAudioAnalysis();
   // useAudioAnalysis() returns a new object every render, so the rAF loop
   // below (mounted once) would otherwise close over `connected: false`
@@ -63,19 +82,48 @@ export default function VisualsDebugPage() {
 
     let raf = 0;
     let lastUiUpdate = 0;
+    let lastClockBpm: number | null = null;
     const loop = (t: number) => {
-      let live = stateRef.current;
-      let analysis = SILENT_ANALYSIS;
+      let base = stateRef.current;
 
-      if (audioConnectedRef.current) {
-        analysis = audioTickRef.current(t);
-        if (audioModeRef.current) {
-          live = applyAudioReactive(stateRef.current, analysis);
+      const fade = fadeRef.current;
+      if (fade) {
+        const k = fade.dur > 0 ? (t - fade.start) / fade.dur : 1;
+        base = lerpLightState(fade.from, fade.to, k);
+        if (k >= 1) {
+          fadeRef.current = null;
+          setState(fade.to);
+        } else if (t - lastUiUpdate > 100) {
+          setState(base);
         }
-        if (t - lastUiUpdate > 120) {
-          lastUiUpdate = t;
-          setLiveAnalysis(analysis);
-        }
+      }
+
+      let live = base;
+      let analysis = SILENT_ANALYSIS;
+      if (audioConnectedRef.current) analysis = audioTickRef.current(t);
+
+      const clock = midiClockRef.current.snapshot(t);
+      const clockPulse = clockPulseRef.current.update(clock.beatHit ? 1 : 0, t);
+      if (clock.running) {
+        analysis = {
+          ...analysis,
+          beatPulse: Math.max(analysis.beatPulse, clockPulse),
+          isBeat: analysis.isBeat || clock.beatHit,
+          bpm: clock.bpm ?? analysis.bpm,
+        };
+      }
+      const roundedBpm = clock.bpm ? Math.round(clock.bpm * 10) / 10 : null;
+      if (roundedBpm !== lastClockBpm) {
+        lastClockBpm = roundedBpm;
+        setClockBpm(roundedBpm);
+      }
+
+      if (audioModeRef.current && (audioConnectedRef.current || clock.running)) {
+        live = applyAudioReactive(base, analysis);
+      }
+      if (t - lastUiUpdate > 120) {
+        lastUiUpdate = t;
+        if (audioConnectedRef.current || clock.running) setLiveAnalysis(analysis);
       }
 
       // BPM flash: same beatPulse envelope driving the bpm zone, just as a
@@ -139,8 +187,30 @@ export default function VisualsDebugPage() {
     onTrigger: (id) => {
       if (id === "toggle.blackout") setBus("blackout", !stateRef.current.bus.blackout);
       else if (id === "toggle.audioMode") setAudioMode((m) => !m);
+      else if (id.startsWith("scene.")) recallScene(Number(id.slice(6)));
     },
+    onRealtime: (status, ts) => midiClockRef.current.onMessage(status, ts),
   });
+
+  function recallScene(slot: number) {
+    const scene = scenes.bank[slot];
+    if (!scene) return;
+    const from = fadeRef.current
+      ? lerpLightState(fadeRef.current.from, fadeRef.current.to, (performance.now() - fadeRef.current.start) / fadeRef.current.dur)
+      : stateRef.current;
+    fadeRef.current = { from, to: structuredClone(scene.state), start: performance.now(), dur: sceneFadeMsRef.current };
+    setActiveScene(slot);
+  }
+
+  function onSceneSlot(slot: number) {
+    if (armSave) {
+      scenes.save(slot, stateRef.current);
+      setArmSave(false);
+      setActiveScene(slot);
+    } else {
+      recallScene(slot);
+    }
+  }
 
   return (
     <div className="flex h-screen w-screen flex-col bg-black text-white">
@@ -210,6 +280,9 @@ export default function VisualsDebugPage() {
             TAP
           </button>
           <div className="text-white/60">{bpm ? `${bpm.toFixed(1)} bpm` : "— bpm"}</div>
+          <div className={clockBpm !== null ? "text-emerald-400" : "text-white/40"} title="Ableton → IAC Driver con Sync ON">
+            midi clock {clockBpm !== null ? `▶ ${clockBpm.toFixed(1)}` : "○ —"}
+          </div>
           <Slider label="bpm flash" value={bpmFlashVisibility} onChange={setBpmFlashVisibility} bindId="ui.bpmFlash" midi={midi} />
         </section>
 
@@ -258,7 +331,7 @@ export default function VisualsDebugPage() {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setAudioMode((m) => !m)}
-              disabled={!audio.connected}
+              disabled={!audio.connected && clockBpm === null}
               className={`rounded px-3 py-1 font-semibold disabled:opacity-30 ${
                 audioMode ? "bg-emerald-600" : "bg-white/10 hover:bg-white/20"
               }`}
@@ -288,6 +361,50 @@ export default function VisualsDebugPage() {
               <span>beat {liveAnalysis.isBeat ? "●" : "○"}</span>
             </div>
           )}
+        </section>
+
+        <section className="flex flex-col gap-2">
+          <h2 className="font-semibold text-white/70">escenas</h2>
+          <div className="grid grid-cols-4 gap-1">
+            {Array.from({ length: SCENE_SLOTS }, (_, i) => {
+              const filled = scenes.bank[i] !== null;
+              return (
+                <div key={i} className="flex flex-col items-center gap-0.5">
+                  <button
+                    onClick={() => onSceneSlot(i)}
+                    onContextMenu={(e) => {
+                      e.preventDefault();
+                      scenes.clear(i);
+                      if (activeScene === i) setActiveScene(null);
+                    }}
+                    title={armSave ? "guardar aquí" : filled ? "disparar (clic derecho: borrar)" : "vacía"}
+                    className={`h-9 w-9 rounded font-semibold ${
+                      armSave
+                        ? "bg-amber-500/60 hover:bg-amber-500"
+                        : activeScene === i
+                          ? "bg-emerald-600"
+                          : filled
+                            ? "bg-white/20 hover:bg-white/30"
+                            : "bg-white/5 text-white/30"
+                    }`}
+                  >
+                    {i + 1}
+                  </button>
+                  <MidiBadge id={`scene.${i}`} midi={midi} />
+                </div>
+              );
+            })}
+          </div>
+          <button
+            onClick={() => setArmSave((a) => !a)}
+            className={`rounded px-3 py-1 ${armSave ? "bg-amber-500 text-black" : "bg-white/10 hover:bg-white/20"}`}
+          >
+            {armSave ? "elige slot…" : "guardar"}
+          </button>
+          <label className="flex flex-col gap-0.5 text-white/50">
+            <span>fade {sceneFadeMs} ms</span>
+            <input type="range" min={0} max={4000} step={50} value={sceneFadeMs} onChange={(e) => setSceneFadeMs(Number(e.target.value))} />
+          </label>
         </section>
 
         <section className="flex flex-1 flex-wrap gap-4">
