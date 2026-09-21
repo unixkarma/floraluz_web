@@ -171,6 +171,8 @@ El slider deja de ser velocidad libre y elige un valor musical:
   corto del círculo; `blackout` cambia a mitad del fade.
 - **Guardar**: `guardar` → clic en un slot = snapshot del estado manual actual.
 - **Borrar**: clic derecho en el slot.
+- **Exportar / importar show**: JSON con escenas + mapeos MIDI + fade +
+  bpm flash (`showFile.ts`). Es lo único que hay que llevar a otro laptop.
 - El audio reactivo sigue aplicándose encima de la escena activa (la
   escena fija colores/chase/master; el audio mueve las intensidades).
 
@@ -266,8 +268,9 @@ bornera, caja, USB-C. Falta: tubos opal, tapas, cable, JST, bases, gaffer.
 4. Chrome → `/visuals`: `list devices` → BlackHole → `AUDIO ON`. Ver
    `midi clock ▶` al dar play y `tubos ● conectado`.
 5. `abrir salida ↗` → proyector → pantalla completa.
-6. Cargar escenas (ya están en `localStorage` del mismo Chrome; si es otro
-   laptop, hay que rehacerlas — export/import es pendiente).
+6. Escenas y mapeos: si es otro laptop/perfil de Chrome, **importar** el
+   `floraluz-show-*.json` (botón en la sección escenas). Exportarlo después
+   de cada ensayo y guardarlo en `shows/` del repo.
 7. Probar blackout desde el pad. Es el botón que siempre tiene que responder.
 
 ---
@@ -281,7 +284,6 @@ con WLED real**).
 
 Pendiente, en orden:
 1. Probar bridge contra el ESP32 real y armar tubo 1.
-2. Export/import de escenas y mapeos MIDI (JSON) para no depender de `localStorage`.
-3. Fase 3 completa: HTP/LTP explícito, OVERRIDE, profundidades de audio por escena.
-4. Fase 5: renderer DMX para los PAR (cuando haya interfaz USB-DMX).
-5. Ableton Link (si el MIDI clock se queda corto) y empaquetado Electron.
+2. Fase 3 completa: HTP/LTP explícito, OVERRIDE, profundidades de audio por escena.
+3. Fase 5: renderer DMX para los PAR (cuando haya interfaz USB-DMX).
+4. Ableton Link (si el MIDI clock se queda corto) y empaquetado Electron.

@@ -49,5 +49,11 @@ export function useScenes() {
     [bank, persist],
   );
 
-  return { bank, save, clear };
+  /** Wholesale replace (show file import); pads/truncates to SCENE_SLOTS. */
+  const replaceAll = useCallback(
+    (next: Bank) => persist(Array.from({ length: SCENE_SLOTS }, (_, i) => next[i] ?? null)),
+    [persist],
+  );
+
+  return { bank, save, clear, replaceAll };
 }

@@ -21,6 +21,7 @@ import { useMidiControl, type MidiControl } from "./useMidiControl";
 import { VISUALS_CHANNEL } from "./broadcast";
 import { useBridge } from "./useBridge";
 import { useScenes } from "./useScenes";
+import { downloadShowFile, pickShowFile, SHOW_FILE_VERSION } from "./showFile";
 
 // 4 zones so the reactive mapping is exactly bpm / low / mid / high — see
 // engine/audio/mapping.ts. Manual mode still lets you repaint any of them.
@@ -204,6 +205,28 @@ export default function VisualsDebugPage() {
       : stateRef.current;
     fadeRef.current = { from, to: structuredClone(scene.state), start: performance.now(), dur: sceneFadeMsRef.current };
     setActiveScene(slot);
+  }
+
+  function exportShow() {
+    downloadShowFile({
+      version: SHOW_FILE_VERSION,
+      exportedAt: new Date().toISOString(),
+      scenes: scenes.bank,
+      midi: midi.bindings,
+      settings: { sceneFadeMs, bpmFlashVisibility },
+    });
+  }
+
+  async function importShow() {
+    const file = await pickShowFile();
+    if (!file) return;
+    scenes.replaceAll(file.scenes);
+    midi.replaceAll(file.midi);
+    if (file.settings) {
+      setSceneFadeMs(file.settings.sceneFadeMs);
+      setBpmFlashVisibility(file.settings.bpmFlashVisibility);
+    }
+    setActiveScene(null);
   }
 
   function onSceneSlot(slot: number) {
@@ -405,6 +428,14 @@ export default function VisualsDebugPage() {
           >
             {armSave ? "elige slot…" : "guardar"}
           </button>
+          <div className="flex gap-1">
+            <button onClick={exportShow} className="rounded bg-white/10 px-2 py-1 text-xs hover:bg-white/20" title="escenas + mapeos MIDI → JSON">
+              exportar show
+            </button>
+            <button onClick={importShow} className="rounded bg-white/10 px-2 py-1 text-xs hover:bg-white/20">
+              importar
+            </button>
+          </div>
           <label className="flex flex-col gap-0.5 text-white/50">
             <span>fade {sceneFadeMs} ms</span>
             <input type="range" min={0} max={4000} step={50} value={sceneFadeMs} onChange={(e) => setSceneFadeMs(Number(e.target.value))} />

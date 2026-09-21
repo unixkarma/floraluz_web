@@ -82,6 +82,8 @@ export function useMidiControl(handlers: MidiControlHandlers) {
   );
 
   const clearAll = useCallback(() => setBindings({}), [setBindings]);
+  /** Wholesale replace (show file import). */
+  const replaceAll = useCallback((next: MidiBindings) => setBindings(next), [setBindings]);
 
   useEffect(() => {
     if (typeof navigator === "undefined" || !("requestMIDIAccess" in navigator)) {
@@ -151,7 +153,7 @@ export function useMidiControl(handlers: MidiControlHandlers) {
     };
   }, [setBindings, setLearnTarget]);
 
-  return { supported, connectedInputs, bindings, learnTarget, setLearnTarget, clearBinding, clearAll };
+  return { supported, connectedInputs, bindings, learnTarget, setLearnTarget, clearBinding, clearAll, replaceAll };
 }
 
 export type MidiControl = ReturnType<typeof useMidiControl>;
