@@ -167,10 +167,10 @@ export default function Press() {
             <div>
               <div className="text-[10px] tracking-widest uppercase text-black/30 mb-1">EMAIL</div>
               <a
-                href="mailto:floraluz333@gmail.com"
+                href="mailto:contacto@floraluz.xyz"
                 className="text-black hover:opacity-50 transition-opacity"
               >
-                floraluz333@gmail.com
+                contacto@floraluz.xyz
               </a>
             </div>
             <div>
@@ -190,7 +190,7 @@ export default function Press() {
           </div>
 
           <a
-            href="mailto:floraluz333@gmail.com"
+            href="mailto:contacto@floraluz.xyz"
             className="inline-block text-xs tracking-widest uppercase text-black/40 hover:text-black transition-colors border border-black/15 hover:border-black/40 px-8 py-4 mt-4"
           >
             → ENVIAR MENSAJE
