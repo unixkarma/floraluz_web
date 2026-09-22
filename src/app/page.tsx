@@ -343,7 +343,7 @@ export default function Home() {
               letterSpacing: '0.1em',
             }}
           >
-            floraluz333@gmail.com
+            contacto@floraluz.xyz
           </div>
         </div>
 
