@@ -16,6 +16,22 @@ WLED_IP=192.168.x.x npm run bridge   # en otra terminal
 El badge "tubos ● conectado" en `/visuals` confirma el WS. Env: `TUBES` (4),
 `PPT` píxeles por tubo (30), `UNIVERSE` (0), `FPS` (40), `FLIPPED` ("1,3").
 
+## Primera prueba de hardware (sin browser)
+
+```sh
+TEST=1 WLED_IP=192.168.x.x TUBES=1 PPT=60 npm run bridge
+```
+
+Manda un patrón fijo: degradado de color a lo largo de la tira + un punto
+blanco que da una vuelta cada 2 s. Sirve para confirmar cableado, WLED y
+Art-Net antes de meter el browser en la ecuación.
+
+- No prende nada → red/IP, o Art-Net no activado en WLED.
+- Prende pero los colores están cambiados → orden GRB vs RGB en WLED.
+- El punto no llega al final → `length` en WLED menor que `TUBES × PPT`.
+- Parpadea o se pone loco al subir el brillo → falta capacitor / GND común,
+  o la señal de datos necesita el level shifter.
+
 ## WLED (una vez, en la web del ESP32)
 
 - **Config → LED Preferences**: tipo WS2811 (o WS2812B), length = TUBES×PPT,

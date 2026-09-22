@@ -23,7 +23,7 @@
 import dgram from "node:dgram";
 import { WebSocketServer } from "ws";
 import type { Frame } from "../../engine/types";
-import { pixelCount, renderPixels, type PixelLayout } from "../../engine/pixel";
+import { hsvToRgb, pixelCount, renderPixels, type PixelLayout } from "../../engine/pixel";
 import { ARTNET_PORT, rgbToArtDmxPackets } from "../../renderers/artnet/packet";
 
 const env = (k: string, d: string) => process.env[k] ?? d;
@@ -48,6 +48,14 @@ const rgb = new Uint8Array(pixelCount(layout) * 3);
 const sock = dgram.createSocket("udp4");
 const t0 = performance.now();
 
+/**
+ * TEST=1: ignore the WebSocket and send a known pattern instead — a white
+ * dot running down the strip plus a slow RGB wash. First hardware bring-up
+ * should always start here: if this works, wiring + WLED + Art-Net are all
+ * fine and anything still broken is on the browser side.
+ */
+const TEST = env("TEST", "") !== "";
+
 const wss = new WebSocketServer({ port: WS_PORT });
 wss.on("connection", (ws) => {
   console.log("[bridge] control page connected");
@@ -68,8 +76,29 @@ function send(buf: Uint8Array) {
   for (const p of packets) sock.send(p, ARTNET_PORT, WLED_IP);
 }
 
+function testPattern(sec: number) {
+  const n = pixelCount(layout);
+  rgb.fill(0);
+  for (let i = 0; i < n; i++) {
+    // Slow hue wash along the strip so colour order (RGB vs GRB) is obvious.
+    const h = ((i / n) * 0.5 + sec * 0.1) % 1;
+    const [r, g, b] = hsvToRgb(h, 1, 0.25);
+    rgb[i * 3] = Math.round(r * 255);
+    rgb[i * 3 + 1] = Math.round(g * 255);
+    rgb[i * 3 + 2] = Math.round(b * 255);
+  }
+  // White dot: one lap per 2s, tells you pixel count and direction.
+  const dot = Math.floor(((sec / 2) % 1) * n) * 3;
+  rgb[dot] = rgb[dot + 1] = rgb[dot + 2] = 255;
+}
+
 setInterval(() => {
   const now = performance.now();
+  if (TEST) {
+    testPattern((now - t0) / 1000);
+    send(rgb);
+    return;
+  }
   if (!latest || now - lastFrameAt > 2000) {
     rgb.fill(0);
     send(rgb);
@@ -80,6 +109,6 @@ setInterval(() => {
 }, 1000 / FPS);
 
 console.log(
-  `[bridge] ws://localhost:${WS_PORT} -> artnet ${WLED_IP}:${ARTNET_PORT} ` +
+  `[bridge]${TEST ? " TEST PATTERN —" : ""} ws://localhost:${WS_PORT} -> artnet ${WLED_IP}:${ARTNET_PORT} ` +
     `universe ${UNIVERSE}+, ${layout.tubes}×${layout.pixelsPerTube}px @ ${FPS}fps`,
 );

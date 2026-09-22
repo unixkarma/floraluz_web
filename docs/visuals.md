@@ -209,6 +209,11 @@ proyector → pantalla completa. No tiene lógica propia: solo escucha
   2 s sin frames manda negro.
 - Badge en `/visuals`: `tubos ● conectado` / `○ sin bridge`. Reconecta solo.
 
+**Modo de prueba sin browser**: `TEST=1 WLED_IP=... TUBES=1 PPT=60 npm run bridge`
+manda un degradado + un punto blanco que recorre la tira cada 2 s. Es el
+primer paso de cualquier bring-up: si eso se ve, el hardware, WLED y
+Art-Net están bien y cualquier problema restante es del browser.
+
 `renderPixels` por tubo (una zona cada uno):
 - **VU**: la intensidad de la zona enciende esa fracción del tubo desde el
   piso; el resto queda a 6 % para que el tubo se vea como objeto.
